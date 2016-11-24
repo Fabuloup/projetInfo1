@@ -1,9 +1,13 @@
 # depslib dependency file v1.0
-1479905092 source:p:\projet 1ere anne\testprojet\main.cpp
-	<SFML/Graphics.hpp>
+1479975861 source:p:\projet 1ere anne\testprojet\main.cpp
+	"functionInGame.hpp"
 
-1479905092 hics.hpp>
+1479976261 source:p:\projet 1ere anne\testprojet\functioningame.cpp
+	"functionInGame.hpp"
 
-1479915790 source:/media/fabuloup/Data/IUT/projetIUT/trunk/testprojet/main.cpp
+1479977122 p:\projet 1ere anne\testprojet\functioningame.hpp
 	<SFML/Graphics.hpp>
+	<fstream>
+	<stdio.h>
+	<stdlib.h>
 
