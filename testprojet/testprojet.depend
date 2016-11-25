@@ -11,3 +11,15 @@
 	<stdio.h>
 	<stdlib.h>
 
+1479945546 source:p:\projetinfo1-master\testprojet\functioningame.cpp
+	"functionInGame.hpp"
+
+1479945546 p:\projetinfo1-master\testprojet\functioningame.hpp
+	<SFML/Graphics.hpp>
+	<fstream>
+	<stdio.h>
+	<stdlib.h>
+
+1479990624 source:p:\projetinfo1-master\testprojet\main.cpp
+	"functionInGame.hpp"
+

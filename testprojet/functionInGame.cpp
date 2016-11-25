@@ -18,31 +18,31 @@ void drawMap(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::Render
                 tileset.setTextureRect(sf::IntRect(0,0,10,10));
                 break;
             case 2:
-                tileset.setTextureRect(sf::IntRect(10, 0, 20, 10));
+                tileset.setTextureRect(sf::IntRect(10, 0, 10, 10));
                 break;
             case 3:
-                tileset.setTextureRect(sf::IntRect(20, 0, 30, 10));
+                tileset.setTextureRect(sf::IntRect(20, 0, 10, 10));
                 break;
             case 4:
-                tileset.setTextureRect(sf::IntRect(0, 10, 10, 20));
+                tileset.setTextureRect(sf::IntRect(0, 10, 10, 10));
                 break;
             case 5:
-                tileset.setTextureRect(sf::IntRect(10, 10, 20, 20));
+                tileset.setTextureRect(sf::IntRect(10, 10, 10, 10));
                 break;
             case 6:
-                tileset.setTextureRect(sf::IntRect(20, 10, 30, 20));
+                tileset.setTextureRect(sf::IntRect(20, 10, 10, 10));
                 break;
             case 7:
-                tileset.setTextureRect(sf::IntRect(0, 20, 10, 30));
+                tileset.setTextureRect(sf::IntRect(0, 20, 10, 10));
                 break;
             case 8:
-                tileset.setTextureRect(sf::IntRect(10, 20, 20, 30));
+                tileset.setTextureRect(sf::IntRect(10, 20, 10, 10));
                 break;
             case 9:
-                tileset.setTextureRect(sf::IntRect(20, 20, 30, 30));
+                tileset.setTextureRect(sf::IntRect(20, 20, 10, 10));
                 break;
             default:
-                tileset.setTextureRect(sf::IntRect(10, 10, 20, 20));
+                tileset.setTextureRect(sf::IntRect(10, 10, 10, 10));
                 break;
             }
             tileset.setPosition(sf::Vector2f(x*10, y*10));
