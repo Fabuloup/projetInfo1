@@ -1,0 +1,8 @@
+Menu                                            - 10h
+Map (affichage+création+sauvegarde)             - 50h
+Gestion du perso (mouvements simples+dash+mort) - 50h
+Gestion des sauvegardes + scores                - 10h
+paramètres(options)                             - 10h
+IA des ennemis                                  - 25h
+Gestion des vagues                              - 45h
+
