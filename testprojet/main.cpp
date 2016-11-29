@@ -6,7 +6,7 @@ int main()
     sf::RenderWindow fenetre(sf::VideoMode(800,600),"Neo Dojo");
 
     sf::Texture murTexture;
-    if( !murTexture.loadFromFile("ressources/murdojo.png"))
+    if( !murTexture.loadFromFile("ressources/texture.png"))
     {
         printf("Impossible de charger le tileset de la map");
     }
