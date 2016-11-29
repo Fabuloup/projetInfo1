@@ -10,8 +10,9 @@ int main()
     {
         printf("Impossible de charger le tileset de la map");
     }
-    char listemap=searchMap();
-    printf("%s", listemap);
+    string listemap=searchMap();
+    cout << listemap;
+    //printf("%s\n", listemap);
     sf::Sprite spritemur;
     spritemur.setTexture(murTexture);
     sf::View vue(sf::FloatRect(0, 0, 800, 600));

@@ -1,8 +1,23 @@
 # include "functionInGame.hpp"
 
-char searchMap()
+string searchMap()
 {
-    return system("dir /B \"ressources/map/\"");
+    ifstream listemap("ressources/map/listemap.txt");
+    string carte;
+    if(listemap)
+    {
+        getline(listemap, carte);
+        /*while (getline(listemap, map))
+        {
+            cout << map << endl;
+        }*/
+        listemap.close();
+    }
+    else
+    {
+        printf("\nImpossible d'ouvrir la liste des maps !\n");
+    }
+    return carte;
 }
 void drawMap(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::RenderWindow *fenetre)
 {
