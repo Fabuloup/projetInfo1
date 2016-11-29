@@ -11,7 +11,7 @@ int main()
         printf("Impossible de charger le tileset de la map");
     }
     string listemap=searchMap();
-    cout << listemap;
+    cout << listemap;//equivalent à print mais pour les string
     //printf("%s\n", listemap);
     sf::Sprite spritemur;
     spritemur.setTexture(murTexture);

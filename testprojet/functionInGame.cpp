@@ -2,19 +2,17 @@
 
 string searchMap()
 {
+    //on ouvre le fichier qui contient le nom des maps
     ifstream listemap("ressources/map/listemap.txt");
     string carte;
-    if(listemap)
+    if(listemap)//si on arrive à l'ouvrir
     {
-        getline(listemap, carte);
-        /*while (getline(listemap, map))
-        {
-            cout << map << endl;
-        }*/
-        listemap.close();
+        getline(listemap, carte);//on stock les lignes du fichier listemap dans carte
+        listemap.close();//on ferme le fichier
     }
     else
     {
+        //si l'ouverture à échouée on affiche l'erreur
         printf("\nImpossible d'ouvrir la liste des maps !\n");
     }
     return carte;

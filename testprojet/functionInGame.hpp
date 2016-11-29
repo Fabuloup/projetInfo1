@@ -2,9 +2,11 @@
 #define FUNCTIONINGAME_HPP_INCLUDED
 
 #include <SFML/Graphics.hpp>
+//pour lire les fichiers
 #include <iostream>
 #include <string>
 #include <fstream>
+//pour lire les fichiers
 #include <stdio.h>
 #include <stdlib.h>
 
