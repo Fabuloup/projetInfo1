@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1480668722 source:p:\projet 1ere anne\editeurmap\main.cpp
+	"functionEditor.hpp"
+
+1480667832 p:\projet 1ere anne\editeurmap\functioneditor.hpp
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<string.h>
+	<SFML/Graphics.hpp>
+	<fstream>
+	<iostream>
+
+1480668347 source:p:\projet 1ere anne\editeurmap\functioneditor.cpp
+	"functionEditor.hpp"
+
