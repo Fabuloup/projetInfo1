@@ -229,6 +229,10 @@ void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapN
                         fichier<<plan[k];
                     }
                     fichier.close();
+                    ofstream fichierListe("ressources\\map\\listemap.txt", ios::out | ios::app);
+                    fichierListe<<"\n";
+                    fichierListe<<mapName;
+                    fichierListe.close();
                 }
                 break;
             case sf::Event::MouseButtonPressed:
