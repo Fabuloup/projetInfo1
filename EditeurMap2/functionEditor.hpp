@@ -19,6 +19,7 @@
 using namespace std; //ouverture des fichiers
 //fonction
 int createOrNew();
+int loadMap(sf::Sprite tileset, sf::RenderWindow *fenetre);
 void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapName="mapEdit.map");
 bool isClickOn(int xToTest, int yToTest, int x, int y, int width, int height);
 void drawMap(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::RenderWindow *fenetre, int decalageX=0, int decalageY=0);

@@ -11,6 +11,7 @@ void funcEditor(sf::Sprite tileset, sf::RenderWindow *fenetre)
     {
         fenetre->setActive(false);
         printf("En cours de développement\n");
+        fenetre->setActive(true);
     }
     else if (choixEdit==0)
     {
@@ -77,7 +78,7 @@ int loadMap(sf::Sprite tileset, sf::RenderWindow *fenetre)
     sf::Event event;
     //exitVar passera a 1 quand le joueur aura choisi sa map
     int exitVar = 0;
-    while (exitVar ==1)
+    while (exitVar == 0 and fenetre->isOpen())
     {
         fenetre->clear();
         fenetre->draw(tileset);
@@ -218,7 +219,10 @@ void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapN
                 if(event.key.code==sf::Keyboard::Return)
                 {
                     isOpen=0;
-                    ofstream fichier(mapName, ios::out | ios::trunc);
+                    char filePath[100];
+                    strcpy(filePath, "ressources\\map\\");
+                    strcat(filePath, mapName);
+                    ofstream fichier(filePath, ios::out | ios::trunc);
                     int k=0;
                     for(k=0; k<10*10; k++)
                     {
