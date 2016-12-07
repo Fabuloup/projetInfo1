@@ -14,3 +14,15 @@
 1480668347 source:p:\projet 1ere anne\editeurmap\functioneditor.cpp
 	"functionEditor.hpp"
 
+1480939374 source:p:\projet 1ere anne\editeurmap2\main.cpp
+	"functionEditor.hpp"
+
+1480939345 p:\projet 1ere anne\editeurmap2\functioneditor.hpp
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<string.h>
+	<SFML/Graphics.hpp>
+	<fstream>
+	<iostream>
+

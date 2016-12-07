@@ -9,6 +9,7 @@ void funcEditor(sf::Sprite tileset, sf::RenderWindow *fenetre)
     choixEdit = createOrNew();
     if(choixEdit==1)
     {
+        fenetre->setActive(false);
         printf("En cours de développement\n");
     }
     else if (choixEdit==0)
@@ -69,6 +70,19 @@ int createOrNew()
     }
 
     return position;
+}
+//fonction qui permet au joueur de choisir sa map parmis celle qui existe déjà
+int loadMap(sf::Sprite tileset, sf::RenderWindow *fenetre)
+{
+    sf::Event event;
+    //exitVar passera a 1 quand le joueur aura choisi sa map
+    int exitVar = 0;
+    while (exitVar ==1)
+    {
+        fenetre->clear();
+        fenetre->draw(tileset);
+        fenetre->display();
+    }
 }
 //fonction pour tester si la souris est sur un bouton
 bool isClickOn(int xToTest, int yToTest, int x, int y, int width, int height)
@@ -185,9 +199,10 @@ void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapN
     //coordonnées des boutons
     //le troisième correspond à l'image du sprite
     int boutonCoord[][2]= {{1,1},{23,1},{12,1}};
+    int isOpen=1;
     //les fleche remplace le point quand on passe la fenetre par pointeur
     //fenetre->setActive(true);
-    while(fenetre->isOpen())
+    while(isOpen==1 and fenetre->isOpen())
     {
         fenetre->clear(sf::Color::Black);
         sf::Event event;
@@ -202,6 +217,7 @@ void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapN
             case sf::Event::KeyPressed:
                 if(event.key.code==sf::Keyboard::Return)
                 {
+                    isOpen=0;
                     ofstream fichier(mapName, ios::out | ios::trunc);
                     int k=0;
                     for(k=0; k<10*10; k++)
@@ -209,7 +225,6 @@ void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapN
                         fichier<<plan[k];
                     }
                     fichier.close();
-                    fenetre->close();
                 }
                 break;
             case sf::Event::MouseButtonPressed:

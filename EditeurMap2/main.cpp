@@ -17,6 +17,9 @@ int main()
     vue.setCenter((int)(LARGEUR*ZOOM)/2, (int)(HAUTEUR*ZOOM)/2);
     fenetre.setView(vue);
 
-    funcEditor(spritemur, &fenetre);
+    while(fenetre.isOpen())
+    {
+        funcEditor(spritemur, &fenetre);
+    }
     return 0;
 }
