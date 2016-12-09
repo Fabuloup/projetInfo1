@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1481275208 source:p:\projet 1ere anne\testpolice\fonction.cpp
+	"fonction.hpp"
+
+1481275005 p:\projet 1ere anne\testpolice\fonction.hpp
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<string.h>
+	<SFML/Graphics.hpp>
+
+1481274977 source:p:\projet 1ere anne\testpolice\main.cpp
+	"fonction.hpp"
+
