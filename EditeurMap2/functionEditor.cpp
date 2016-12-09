@@ -2,11 +2,11 @@
 
 // demande dans l'invite de commande ce que souhaite faire l'utilisateur (editer ou creer une nouvelle map
 
-void funcEditor(sf::Sprite tileset, sf::RenderWindow *fenetre)
+void funcEditor(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre)
 {
     int choixEdit =0;
     //choix de l'utilisateur (voir fonction)
-    choixEdit = createOrNew();
+    choixEdit = createOrNew(fenetre, tileset, tileTexte);
     if(choixEdit==1)
     {
         fenetre->setActive(false);
@@ -19,55 +19,51 @@ void funcEditor(sf::Sprite tileset, sf::RenderWindow *fenetre)
         printf("Entrez le nom de votre map sans oublier le \".map\"\n>>> ");
         scanf("%s", NomMap);
         fenetre->setActive(false);
-        int carteDeBase[10*10]={4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
+        int carteDeBase[10*10]= {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
         editor(carteDeBase, tileset, fenetre, NomMap);
         fenetre->setActive(true);
     }
 }
 
-
-int createOrNew()
+int createOrNew(sf::RenderWindow *fenetre, sf::Sprite tileset, sf::Sprite textTile)
 {
-    const char interfaceMenu[][100] = {"-----------------------------------------", "Que souhaitez-vous faire ?", "Creer une nouvelle map", "Editer une map existante"};
     int position=0;//stock la position du curseur des choix dans le menu
-    int touche=0;//permet de stocker le code d'une touche du clavier appuyer
+    int finBoucle=0; //pour terminer la boucle quand l'utilisateur a fais son choix
+    char titre[]="editeur de map";
     //75 touche gauche / 77 touche droite
-
-    while(touche != 13)
+    sf::Event event;
+    while(fenetre->isOpen() && finBoucle==0)
     {
-        system("cls");
-        printf("%s\n", interfaceMenu[0]);
-        int k=0;
-        for(k=0; k<5; k++)
+        fenetre->clear();
+        while(fenetre->pollEvent(event))
         {
-            printf(" ");//pour centrer le titre
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+                fenetre->close();
+                break;
+            case sf::Event::KeyPressed:
+                switch(event.key.code)
+                {
+                case sf::Keyboard::Return:
+                    finBoucle=1;
+                    break;
+                case sf::Keyboard::Left:
+                    position=0;
+                    break;
+                case sf::Keyboard::Right:
+                    position=1;
+                    break;
+                default:
+                    break;
+                }
+                break;
+            default:
+                break;
+            }
         }
-        printf("%s\n", interfaceMenu[1]);
-        printf("%s\n", interfaceMenu[0]);
-        //affichage en fonction de la position du curseur de choix
-        if(position==0)
-        {
-            printf(" >%s   --", interfaceMenu[2]);
-            printf("  %s\n", interfaceMenu[3]);
-        }
-        else if(position==1)
-        {
-            printf("  %s   --", interfaceMenu[2]);
-            printf(" >%s\n", interfaceMenu[3]);
-        }
-        touche=getch();//on stocke la touche appuyer sans bloquer le programme
-        switch(touche)
-        {
-        case 75:
-            position=0;
-            break;
-        case 77:
-            position=1;
-            break;
-        default:
-            position=position;
-            break;
-        }
+        MachineAEcrire(textTile, fenetre, titre, 50, 10, 0.5f);
+        fenetre->display();
     }
 
     return position;
@@ -83,6 +79,45 @@ int loadMap(sf::Sprite tileset, sf::RenderWindow *fenetre)
         fenetre->clear();
         fenetre->draw(tileset);
         fenetre->display();
+    }
+}
+
+void scanGraphique(char *texte, sf::RenderWindow *fenetre, int posX, int posY, float taille)
+{
+    int position=0; //nous permet de connaitre notre posistion dans le mot
+    char *lettreTapee; //le caractère tapé par l'utilisateur
+    sf::Event event;
+    sf::Texture textTexture;
+    if( !textTexture.loadFromFile("ressources/alphabetred.png"))
+    {
+        printf("Impossible de charger le tileset du texte");
+    }
+    sf::Sprite spriteTexte;
+    spriteTexte.setTexture(textTexture);
+    while(fenetre->pollEvent(event))
+    {
+        switch(event.type)
+        {
+        case sf::Event::Closed:
+            fenetre->close();
+            break;
+        case sf::Event::KeyPressed:
+            switch (event.key.code)
+            {
+            case sf::Keyboard::Space:
+                lettreTapee=" ";
+                break;
+            case sf::Keyboard::A:
+                lettreTapee="a";
+                break;
+            default :
+                lettreTapee=" ";
+                break;
+            }
+            strcat(texte, lettreTapee);
+            MachineAEcrire(spriteTexte, fenetre, lettreTapee, posX, posY, taille);
+            break;
+        }
     }
 }
 //fonction pour tester si la souris est sur un bouton
@@ -332,4 +367,113 @@ void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapN
     //fenetre->setActive(false);
 }
 
+int findLetter(char lettre)
+{
+    int numLettre=29;
 
+    switch(lettre)
+    {
+    case 'a':
+        numLettre=0;
+        break;
+    case 'b':
+        numLettre=1;
+        break;
+    case 'c':
+        numLettre=2;
+        break;
+    case 'd':
+        numLettre=3;
+        break;
+    case 'e':
+        numLettre=4;
+        break;
+    case 'f':
+        numLettre=5;
+        break;
+    case 'g':
+        numLettre=6;
+        break;
+    case 'h':
+        numLettre=7;
+        break;
+    case 'i':
+        numLettre=8;
+        break;
+    case 'j':
+        numLettre=9;
+        break;
+    case 'k':
+        numLettre=10;
+        break;
+    case 'l':
+        numLettre=11;
+        break;
+    case 'm':
+        numLettre=12;
+        break;
+    case 'n':
+        numLettre=13;
+        break;
+    case 'o':
+        numLettre=14;
+        break;
+    case 'p':
+        numLettre=15;
+        break;
+    case 'q':
+        numLettre=16;
+        break;
+    case 'r':
+        numLettre=17;
+        break;
+    case 's':
+        numLettre=18;
+        break;
+    case 't':
+        numLettre=19;
+        break;
+    case 'u':
+        numLettre=20;
+        break;
+    case 'v':
+        numLettre=21;
+        break;
+    case 'w':
+        numLettre=22;
+        break;
+    case 'x':
+        numLettre=23;
+        break;
+    case 'y':
+        numLettre=24;
+        break;
+    case 'z':
+        numLettre=25;
+        break;
+    case '.':
+        numLettre=26;
+        break;
+    default:
+        numLettre=29;
+        break;
+    }
+    return numLettre;
+}
+
+void MachineAEcrire(sf::Sprite fontTile, sf::RenderWindow *fenetre, char* texte, int posX, int posY, float taille)
+{
+    int i=0;
+    int lettre=0;
+    for(i=0; texte[i] != '\0'; i++)
+    {
+        texte[i]=tolower(texte[i]);
+        //passe en majuscule le lettre avant de trouver quel lettre c'est
+        lettre=findLetter(texte[i]);
+        fontTile.setTextureRect(sf::IntRect((lettre%10)*DIMENSIONLETTRE, (lettre/10)*DIMENSIONLETTRE, DIMENSIONLETTRE, DIMENSIONLETTRE));
+        //permet de redimensionner les lettres
+        fontTile.setScale(taille, taille);
+        fontTile.setPosition(posX+i*(DIMENSIONLETTRE*taille), posY);
+        fenetre->draw(fontTile);
+    }
+}
