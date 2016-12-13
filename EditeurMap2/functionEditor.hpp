@@ -21,13 +21,13 @@
 using namespace std; //ouverture des fichiers
 //fonction
 int createOrNew(sf::RenderWindow *fenetre, sf::Sprite tileset, sf::Sprite textTile);
-int loadMap(sf::Sprite tileset, sf::RenderWindow *fenetre);
+void loadMap(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre, char *nomMap, int *carte);
 void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapName="mapEdit.map");
 bool isClickOn(int xToTest, int yToTest, int x, int y, int width, int height);
 void drawMap(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::RenderWindow *fenetre, int decalageX=0, int decalageY=0);
 void changeMapValue(int *plan, int largeurMap, int hauteurMap, int x, int y, int tileSelected, int decalageX=0, int decalageY=0);
 void funcEditor(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre);
 void MachineAEcrire(sf::Sprite fontTile, sf::RenderWindow *fenetre, char* texte, int posX=0, int posY=0, float taille=1.0);
-void scanGraphique(char *texte, sf::RenderWindow *fenetre, int posX=0, int posY=0, float taille=1.0f);
+void scanGraphique(char *texte,sf::Sprite tileText, sf::RenderWindow *fenetre, int posX=0, int posY=0, float taille=1.0f);
 
 #endif // FUNCTIONEDITOR_HPP_INCLUDED

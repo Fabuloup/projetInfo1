@@ -5,23 +5,27 @@
 void funcEditor(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre)
 {
     int choixEdit =0;
+    char NomMap[100]="";
     //choix de l'utilisateur (voir fonction)
     choixEdit = createOrNew(fenetre, tileset, tileTexte);
     if(choixEdit==1)
     {
-        fenetre->setActive(false);
-        printf("En cours de développement\n");
-        fenetre->setActive(true);
+        int carte[100];
+        loadMap(tileset, tileTexte, fenetre, NomMap, carte);
+        editor(carte, tileset, fenetre, NomMap);
     }
     else if (choixEdit==0)
     {
-        char NomMap[50]="";
-        printf("Entrez le nom de votre map sans oublier le \".map\"\n>>> ");
-        scanf("%s", NomMap);
-        fenetre->setActive(false);
+        char titre[]="Entrez le nom de votre map (tab ajoute le .map)";
+        fenetre->clear();
+        MachineAEcrire(tileTexte, fenetre, titre, 30, 1, 0.2f);
+        fenetre->display();
+        fenetre->clear();
+        MachineAEcrire(tileTexte, fenetre, titre, 30, 1, 0.2f);
+        fenetre->display();
+        scanGraphique(NomMap, tileTexte, fenetre, 30, 60, 0.4f);
         int carteDeBase[10*10]= {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
         editor(carteDeBase, tileset, fenetre, NomMap);
-        fenetre->setActive(true);
     }
 }
 
@@ -30,6 +34,8 @@ int createOrNew(sf::RenderWindow *fenetre, sf::Sprite tileset, sf::Sprite textTi
     int position=0;//stock la position du curseur des choix dans le menu
     int finBoucle=0; //pour terminer la boucle quand l'utilisateur a fais son choix
     char titre[]="editeur de map";
+    char choix1[]="creer une map";
+    char choix2[]="editer une map";
     //75 touche gauche / 77 touche droite
     sf::Event event;
     while(fenetre->isOpen() && finBoucle==0)
@@ -63,60 +69,182 @@ int createOrNew(sf::RenderWindow *fenetre, sf::Sprite tileset, sf::Sprite textTi
             }
         }
         MachineAEcrire(textTile, fenetre, titre, 50, 10, 0.5f);
+        MachineAEcrire(textTile, fenetre, choix1, 30, 60, 0.3f);
+        MachineAEcrire(textTile, fenetre, choix2, 130, 60, 0.3f);
+        tileset.setTextureRect(sf::IntRect(50, 30, 10, 10));
+        tileset.setPosition(18+position*100, 58);
+        fenetre->draw(tileset);
         fenetre->display();
     }
 
     return position;
 }
 //fonction qui permet au joueur de choisir sa map parmis celle qui existe déjà
-int loadMap(sf::Sprite tileset, sf::RenderWindow *fenetre)
+void loadMap(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre, char *nomMap, int *carte)
 {
-    sf::Event event;
     //exitVar passera a 1 quand le joueur aura choisi sa map
     int exitVar = 0;
+    char informations[]="Entrez le nom de la map a charger";
+    char astuce[]="La touche TAB ajoute le .map";
     while (exitVar == 0 and fenetre->isOpen())
     {
+        char chemin[]="ressources/map/";
         fenetre->clear();
-        fenetre->draw(tileset);
+        MachineAEcrire(tileTexte, fenetre, informations, 30, 10, 0.3f);
+        MachineAEcrire(tileTexte, fenetre, astuce, 40, 20, 0.3f);
         fenetre->display();
+        fenetre->clear();
+        MachineAEcrire(tileTexte, fenetre, informations, 30, 10, 0.3f);
+        MachineAEcrire(tileTexte, fenetre, astuce, 40, 20, 0.3f);
+        fenetre->display();
+        scanGraphique(nomMap, tileTexte, fenetre, 20,70, 0.3f);
+        fenetre->display();
+        //on ajoute le nom du dossier au nom de la map
+        strcat(chemin, nomMap);
+        printf("%s\n", chemin);
+        FILE* fichierMap=NULL;
+        fichierMap = fopen(chemin, "r");
+        if(fichierMap==NULL)
+        {
+            printf("Impossible d'ouvrir le fichier\n");
+        }
+        else
+        {
+            int k=0;
+            for(k=0; k<100; k++)
+            {
+                carte[k]=(int)(fgetc(fichierMap)-48);
+                printf("%i\n", carte[k]);
+            }
+            fclose(fichierMap);
+            exitVar=1;
+        }
     }
 }
 
-void scanGraphique(char *texte, sf::RenderWindow *fenetre, int posX, int posY, float taille)
+void scanGraphique(char *texte,sf::Sprite tileText, sf::RenderWindow *fenetre, int posX, int posY, float taille)
 {
     int position=0; //nous permet de connaitre notre posistion dans le mot
+    int toContinue = 0; // pour sortir de la boucle lorsque l'utilisateur aura fini d'ecrire son mot
     char *lettreTapee; //le caractère tapé par l'utilisateur
     sf::Event event;
-    sf::Texture textTexture;
-    if( !textTexture.loadFromFile("ressources/alphabetred.png"))
+
+    while(fenetre->isOpen() && toContinue==0)
     {
-        printf("Impossible de charger le tileset du texte");
-    }
-    sf::Sprite spriteTexte;
-    spriteTexte.setTexture(textTexture);
-    while(fenetre->pollEvent(event))
-    {
-        switch(event.type)
+        while(fenetre->pollEvent(event))
         {
-        case sf::Event::Closed:
-            fenetre->close();
-            break;
-        case sf::Event::KeyPressed:
-            switch (event.key.code)
+            switch(event.type)
             {
-            case sf::Keyboard::Space:
-                lettreTapee=" ";
+            case sf::Event::Closed:
+                fenetre->close();
                 break;
-            case sf::Keyboard::A:
-                lettreTapee="a";
+            case sf::Event::KeyPressed:
+                switch (event.key.code)
+                {
+                case sf::Keyboard::Return:
+                    lettreTapee="";
+                    toContinue=1;
+                    break;
+                case sf::Keyboard::Space:
+                    lettreTapee=" ";
+                    break;
+                 case sf::Keyboard::BackSpace:
+                    lettreTapee="";
+                    texte[strlen(texte)-1]=texte[strlen(texte)];
+                    break;
+                case sf::Keyboard::A:
+                    lettreTapee="a";
+                    break;
+                case sf::Keyboard::B:
+                    lettreTapee="b";
+                    break;
+                case sf::Keyboard::C:
+                    lettreTapee="c";
+                    break;
+                case sf::Keyboard::D:
+                    lettreTapee="d";
+                    break;
+                case sf::Keyboard::E:
+                    lettreTapee="e";
+                    break;
+                case sf::Keyboard::F:
+                    lettreTapee="f";
+                    break;
+                case sf::Keyboard::G:
+                    lettreTapee="g";
+                    break;
+                case sf::Keyboard::H:
+                    lettreTapee="h";
+                    break;
+                case sf::Keyboard::I:
+                    lettreTapee="i";
+                    break;
+                case sf::Keyboard::J:
+                    lettreTapee="j";
+                    break;
+                case sf::Keyboard::K:
+                    lettreTapee="k";
+                    break;
+                case sf::Keyboard::L:
+                    lettreTapee="l";
+                    break;
+                case sf::Keyboard::M:
+                    lettreTapee="m";
+                    break;
+                case sf::Keyboard::N:
+                    lettreTapee="n";
+                    break;
+                case sf::Keyboard::O:
+                    lettreTapee="o";
+                    break;
+                case sf::Keyboard::P:
+                    lettreTapee="p";
+                    break;
+                case sf::Keyboard::Q:
+                    lettreTapee="q";
+                    break;
+                case sf::Keyboard::R:
+                    lettreTapee="r";
+                    break;
+                case sf::Keyboard::S:
+                    lettreTapee="s";
+                    break;
+                case sf::Keyboard::T:
+                    lettreTapee="t";
+                    break;
+                case sf::Keyboard::U:
+                    lettreTapee="u";
+                    break;
+                case sf::Keyboard::V:
+                    lettreTapee="v";
+                    break;
+                case sf::Keyboard::W:
+                    lettreTapee="w";
+                    break;
+                case sf::Keyboard::X:
+                    lettreTapee="x";
+                    break;
+                case sf::Keyboard::Y:
+                    lettreTapee="y";
+                    break;
+                case sf::Keyboard::Z:
+                    lettreTapee="z";
+                    break;
+                case sf::Keyboard::Tab:
+                    lettreTapee=".map";
+                    break;
+                default :
+                    lettreTapee=" ";
+                    break;
+                }
+                fenetre->clear();
+                strcat(texte, lettreTapee);
+                MachineAEcrire(tileText, fenetre, texte, posX, posY, taille);
+                fenetre->display();
                 break;
-            default :
-                lettreTapee=" ";
+            default:
                 break;
             }
-            strcat(texte, lettreTapee);
-            MachineAEcrire(spriteTexte, fenetre, lettreTapee, posX, posY, taille);
-            break;
         }
     }
 }
@@ -240,7 +368,7 @@ void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapN
     //fenetre->setActive(true);
     while(isOpen==1 and fenetre->isOpen())
     {
-        fenetre->clear(sf::Color::Black);
+        fenetre->clear();
         sf::Event event;
 
         while(fenetre->pollEvent(event))
@@ -261,7 +389,14 @@ void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapN
                     int k=0;
                     for(k=0; k<10*10; k++)
                     {
-                        fichier<<plan[k];
+                        if(plan[k]>=10)
+                        {
+                            fichier<<(char)(plan[k]+48);
+                        }
+                        else
+                        {
+                            fichier<<plan[k];
+                        }
                     }
                     fichier.close();
                     ofstream fichierListe("ressources\\map\\listemap.txt", ios::out | ios::app);
