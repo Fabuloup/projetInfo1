@@ -7,13 +7,28 @@
 
 #define LARGEUR_FENETRE 800
 #define HAUTEUR_FENETRE 600
+
 int main()
 {
     //Création de la fenêtre et de l'évnènement
     sf::RenderWindow fenetre(sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "Neo Dojo");
     sf::Event event;
-    int choix=1;
+    int choix=1, quitterOptions=0, posOption=0, sonOn=1, vsyncOn=1;
     int touche=(HAUTEUR_FENETRE/2)-110+10;
+    char titreOpt[]="Options";
+    char vsyncOpt[]="Vsync";
+    char sonOpt[]="Son";
+    char quitterOpt[]="Quitter";
+    char *son_choixOpt[3];
+    char *vsync_choixOpt[3];
+    *son_choixOpt = (char*)malloc(256);
+    *vsync_choixOpt = (char*)malloc(256);
+
+    //Activation vsync
+    free(vsync_choixOpt);
+    *vsync_choixOpt=strcpy(*vsync_choixOpt, "ON");
+    fenetre.setVerticalSyncEnabled(true);
+    vsyncOn=1;
 
     //Chargement son
     sf::Music musiqueFond;
@@ -32,6 +47,14 @@ int main()
     musiqueFond.setLoop(true);
     musiqueFond.play();
 
+    //Activation son
+    free(son_choixOpt);
+    *son_choixOpt=strcpy(*son_choixOpt, "ON");
+    sonChoix.setVolume(100);
+    sonDeplacement.setVolume(100);
+    musiqueFond.setVolume(100);
+    sonOn=1;
+
     //Bordel de Fabien
     sf::Texture textTexture;
     if( !textTexture.loadFromFile("ressources/alphabetred.png"))
@@ -42,8 +65,8 @@ int main()
     spriteTexte.setTexture(textTexture);
 
     //Création sprites et textures
-    sf::Sprite spriteMenu, spriteChoix, spriteCurseur, spriteFond;
-    sf::Texture textureMenu, textureFond, textureChoix;
+    sf::Sprite spriteMenu, spriteChoix, spriteCurseur, spriteFond, spriteOptions;
+    sf::Texture textureMenu, textureFond, textureChoix, textureOptions;
 
     //Chargement des images
     if (!textureChoix.loadFromFile("ressources/texture.png"))
@@ -52,12 +75,15 @@ int main()
         printf("Erreur de chargement du fond\n");
     if (!textureMenu.loadFromFile("ressources/titre.png"))
         printf("Erreur de chargement titre.png\n");
+    //if (!textureOptions.loadFromFile("ressources/options.png"))
+    //    printf("Erreur de chargement options.png\n");
 
     //Association sprite et image
     spriteMenu.setTexture(textureMenu);
     spriteChoix.setTexture(textureChoix);
     spriteCurseur.setTexture(textureChoix);
     spriteFond.setTexture(textureFond);
+    spriteOptions.setTexture(textureOptions);
 
     //Grossissement image
     spriteMenu.setScale(2.0f,2.0f);
@@ -96,15 +122,8 @@ int main()
                 {
                     //Déplacement du curseur
                     spriteCurseur.setPosition((LARGEUR_FENETRE/2)-40-70,(HAUTEUR_FENETRE/2)-110+10);
-                    //Clear puis redessine les sprites
-                    fenetre.clear(sf::Color::Black);
-                    fenetre.draw(spriteFond);
-                    fenetre.draw(spriteMenu);
-                    fenetre.draw(spriteChoix);
-                    fenetre.draw(spriteCurseur);
-                    fenetre.display();
-                    //Son deplacement
-                    sonDeplacement.play();
+                    //Fonction pour redessiner la fenêtre
+                    DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
                     //Choix = 1 --> Pour définir sur quelle menu lancer ensuite
                     choix=1;
                 }
@@ -112,88 +131,35 @@ int main()
                 else if ((LARGEUR_FENETRE/2-40)<event.mouseMove.x && event.mouseMove.x<(LARGEUR_FENETRE/2)-40+127 && (HAUTEUR_FENETRE/2)-110+40<event.mouseMove.y && event.mouseMove.y<(HAUTEUR_FENETRE/2)-110+80)
                 {
                     spriteCurseur.setPosition((LARGEUR_FENETRE/2)-40-70,(HAUTEUR_FENETRE/2)-110+50);
-                    fenetre.clear(sf::Color::Black);
-                    fenetre.draw(spriteFond);
-                    fenetre.draw(spriteMenu);
-                    fenetre.draw(spriteChoix);
-                    fenetre.draw(spriteCurseur);
-                    fenetre.display();
-                    sonDeplacement.play();
+                    //Fonction pour redessiner la fenêtre
+                    DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
                     choix=2;
                 }
                 //Test si souris sur Options
                 else if ((LARGEUR_FENETRE/2-40)<event.mouseMove.x && event.mouseMove.x<(LARGEUR_FENETRE/2)-40+127 && (HAUTEUR_FENETRE/2)-110+80<event.mouseMove.y && event.mouseMove.y<(HAUTEUR_FENETRE/2)-110+120)
                 {
                     spriteCurseur.setPosition((LARGEUR_FENETRE/2)-40-70,(HAUTEUR_FENETRE/2)-110+90);
-                    fenetre.clear(sf::Color::Black);
-                    fenetre.draw(spriteFond);
-                    fenetre.draw(spriteMenu);
-                    fenetre.draw(spriteChoix);
-                    fenetre.draw(spriteCurseur);
-                    fenetre.display();
-                    sonDeplacement.play();
+                    //Fonction pour redessiner la fenêtre
+                    DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
                     choix=3;
                 }
                 //Test si souris sur Editeur
                 else if ((LARGEUR_FENETRE/2-40)<event.mouseMove.x && event.mouseMove.x<(LARGEUR_FENETRE/2)-40+127 && (HAUTEUR_FENETRE/2)-110+120<event.mouseMove.y && event.mouseMove.y<(HAUTEUR_FENETRE/2)-110+160)
                 {
                     spriteCurseur.setPosition((LARGEUR_FENETRE/2)-40-70,(HAUTEUR_FENETRE/2)-110+130);
-                    fenetre.clear(sf::Color::Black);
-                    fenetre.draw(spriteFond);
-                    fenetre.draw(spriteMenu);
-                    fenetre.draw(spriteChoix);
-                    fenetre.draw(spriteCurseur);
-                    fenetre.display();
-                    sonDeplacement.play();
+                    //Fonction pour redessiner la fenêtre
+                    DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
                     choix=4;
                 }
                 //Test si souris sur Quitter
                 else if ((LARGEUR_FENETRE/2-40)<event.mouseMove.x && event.mouseMove.x<(LARGEUR_FENETRE/2)-40+127 && (HAUTEUR_FENETRE/2)-110+160<event.mouseMove.y && event.mouseMove.y<(HAUTEUR_FENETRE/2)-110+200)
                 {
                     spriteCurseur.setPosition((LARGEUR_FENETRE/2)-40-70,(HAUTEUR_FENETRE/2)-110+170);
-                    fenetre.clear(sf::Color::Black);
-                    fenetre.draw(spriteFond);
-                    fenetre.draw(spriteMenu);
-                    fenetre.draw(spriteChoix);
-                    fenetre.draw(spriteCurseur);
-                    sonDeplacement.play();
-                    fenetre.display();
+                    //Fonction pour redessiner la fenêtre
+                    DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
                     choix=5;
                 }
                 break;
-            }
-            //Test si un clic gauche est fait
-            case sf::Event::MouseButtonPressed:
-            {
-                //En fonction du choix, un clic permet d'accéder au menu sélectionné
-                if (event.mouseButton.button == sf::Mouse::Left)
-                {
-                    switch (choix)
-                    {
-                    case 1:
-                        printf("Jouer");
-                        sonChoix.play();
-                        break;
-                    case 2:
-                        printf("Multi");
-                        sonChoix.play();
-                        break;
-                    case 3:
-                        printf("Options");
-                        sonChoix.play();
-                        break;
-                    case 4:
-                        funcEditor(spriteChoix, spriteTexte, &fenetre);
-                        sonChoix.play();
-                        break;
-                    case 5:
-                        printf("Quitter");
-                        sonChoix.play();
-                        fenetre.close();
-                        musiqueFond.stop();
-                        break;
-                    }
-                }
             }
             //Utilisation des touches haut et bas du clavier pour naviguer dans le menu
             case sf::Event::KeyPressed:
@@ -203,32 +169,22 @@ int main()
                     //On teste si le cursuer n'est pas déjà au plus haut (Option Jouer) sinon on augmente la position de 40
                     if (touche!=((HAUTEUR_FENETRE/2)-110+10))
                         touche=touche-40;
-                    //Clear puis dessine la fenêtre
+                    //Nouvelle position du curseur
                     spriteCurseur.setPosition((LARGEUR_FENETRE/2)-40-70,touche);
-                    fenetre.clear(sf::Color::Black);
-                    fenetre.draw(spriteFond);
-                    fenetre.draw(spriteMenu);
-                    fenetre.draw(spriteChoix);
-                    fenetre.draw(spriteCurseur);
-                    sonDeplacement.play();
-                    fenetre.display();
+                    //Fonction pour redessiner la fenêtre
+                    DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
                 }
                 else if (event.key.code == sf::Keyboard::Down)
                 {
                     //On teste si le curseur n'est pas au plus bas
                     if (touche!=(HAUTEUR_FENETRE/2)-110+170)
                         touche=touche+40;
-                    //Clear puis dessine
+                    //Nouvelle position du curseur
                     spriteCurseur.setPosition((LARGEUR_FENETRE/2)-40-70,touche);
-                    fenetre.clear(sf::Color::Black);
-                    fenetre.draw(spriteFond);
-                    fenetre.draw(spriteMenu);
-                    fenetre.draw(spriteChoix);
-                    fenetre.draw(spriteCurseur);
-                    fenetre.display();
-                    sonDeplacement.play();
+                    //Fonction pour redessiner la fenêtre
+                    DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
                 }
-                //En fonction de la position de 'touche' qui est la position y du curseur, on définit le choix
+                //En fonction de la position de 'touche' qui est la position en y du curseur, on définit le choix
                 switch (touche)
                 {
                 case (HAUTEUR_FENETRE/2)-110+10:
@@ -247,43 +203,176 @@ int main()
                     choix=5;
                     break;
                 }
-                //Si on appuie sur espace, renvoie vers le prochain menu en fonction de choix
-                if (event.key.code == sf::Keyboard::Space)
+                break;
+            }
+            }
+            if ((event.type==sf::Event::KeyPressed && event.key.code==sf::Keyboard::Space) || (event.type==sf::Event::MouseButtonPressed && event.key.code==sf::Mouse::Left))
+            {
+                switch (choix)
                 {
-                    switch (choix)
+                case 1:
+                    printf("Jouer");
+                    sonChoix.play();
+                    break;
+                case 2:
+                    printf("Multi");
+                    sonChoix.play();
+                    break;
+                case 3:
+                    printf("Options");
+                    sonChoix.play();
+                    quitterOptions=0;
+
+                    //On dessine le menu d'Options et on met le curseur sur le premier choix
+                    spriteCurseur.setPosition(240,210);
+                    DessineOption(&fenetre, spriteCurseur, spriteFond);
+                    MachineAEcrire(spriteTexte, &fenetre, titreOpt, 200, 25, 3.0);
+                    MachineAEcrire(spriteTexte, &fenetre, vsyncOpt, 300, 200, 2.2);
+                    MachineAEcrire(spriteTexte, &fenetre, sonOpt, 350, 350, 2.0);
+                    MachineAEcrire(spriteTexte, &fenetre, quitterOpt, 275, 500, 2.0);
+                    MachineAEcrire(spriteTexte, &fenetre, *vsync_choixOpt, 600,200,2.2);
+                    MachineAEcrire(spriteTexte, &fenetre, *son_choixOpt, 600, 350, 2.0);
+                    fenetre.display();
+                    //While pour éviter de sortir du menu, on en sortira quand on choisira 'Quitter'
+                    while(quitterOptions==0)
                     {
-                    case 1:
-                        printf("Jouer");
-                        sonChoix.play();
-                        break;
-                    case 2:
-                        printf("Multi");
-                        sonChoix.play();
-                        break;
-                    case 3:
-                        printf("Options");
-                        sonChoix.play();
-                        break;
-                    case 4:
-                        funcEditor(spriteChoix, spriteTexte, &fenetre);
-                        sonChoix.play();
-                        break;
-                    case 5:
-                        printf("Quitter");
-                        sonChoix.play();
-                        fenetre.close();
-                        break;
+                        if (fenetre.pollEvent(event))
+                        {
+                            if (event.type==sf::Event::MouseMoved)
+                            {
+                                sonDeplacement.play();
+                                //Si souris est sur vsync
+                                if (event.mouseMove.x>=300 && event.mouseMove.x<=500 && event.mouseMove.y>=200 && event.mouseMove.y<=240)
+                                {
+                                    spriteCurseur.setPosition(240,210);
+                                    DessineOption(&fenetre, spriteCurseur, spriteFond);
+                                    MachineAEcrire(spriteTexte, &fenetre, titreOpt, 200, 25, 3.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, vsyncOpt, 300, 200, 2.2);
+                                    MachineAEcrire(spriteTexte, &fenetre, sonOpt, 350, 350, 2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, quitterOpt, 275, 500, 2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, *vsync_choixOpt, 600,200,2.2);
+                                    MachineAEcrire(spriteTexte, &fenetre, *son_choixOpt, 600, 350, 2.0);
+                                    fenetre.display();
+                                    posOption=1;
+                                }
+                                //Si souris sur Son
+                                else if (event.mouseMove.x>=350 && event.mouseMove.x<=470 && event.mouseMove.y>=350 && event.mouseMove.y<=390)
+                                {
+                                    spriteCurseur.setPosition(290,360);
+                                    DessineOption(&fenetre, spriteCurseur, spriteFond);
+                                    MachineAEcrire(spriteTexte, &fenetre, titreOpt, 200, 25, 3.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, vsyncOpt, 300, 200, 2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, sonOpt, 350, 350, 2.2);
+                                    MachineAEcrire(spriteTexte, &fenetre, quitterOpt, 275, 500, 2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, *vsync_choixOpt, 600,200,2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, *son_choixOpt, 600, 350, 2.2);
+                                    fenetre.display();
+                                    posOption=2;
+                                }
+                                //Si souris sur Quitter
+                                else if (event.mouseMove.x>=250 && event.mouseMove.x<=600 && event.mouseMove.y>=500 && event.mouseMove.y<=550)
+                                {
+                                    spriteCurseur.setPosition(210,510);
+                                   DessineOption(&fenetre, spriteCurseur, spriteFond);
+                                    MachineAEcrire(spriteTexte, &fenetre, titreOpt, 200, 25, 3.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, vsyncOpt, 300, 200, 2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, sonOpt, 350, 350, 2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, quitterOpt, 275, 500, 2.2);
+                                    MachineAEcrire(spriteTexte, &fenetre, *vsync_choixOpt, 600,200,2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, *son_choixOpt, 600, 350, 2.0);
+                                    fenetre.display();
+                                    posOption=3;
+                                }
+                            }
+                            //Test des clics
+                            if (event.type==sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                            {
+                                sonChoix.play();
+                                if (posOption==3)
+                                {
+                                    quitterOptions=1;
+                                    spriteCurseur.setPosition((LARGEUR_FENETRE/2)-40-70,(HAUTEUR_FENETRE/2)-110+10);
+                                }
+                                else if (posOption==1)
+                                {
+                                    switch(vsyncOn)
+                                    {
+                                    case 1:
+                                        free(vsync_choixOpt);
+                                        *vsync_choixOpt=strcpy(*vsync_choixOpt, "OFF");
+                                        fenetre.setVerticalSyncEnabled(false);
+                                        vsyncOn=0;
+                                        break;
+                                    case 0:
+                                        free(vsync_choixOpt);
+                                        *vsync_choixOpt=strcpy(*vsync_choixOpt, "ON");
+                                        fenetre.setVerticalSyncEnabled(true);
+                                        vsyncOn=1;
+                                        break;
+                                    }
+                                    spriteCurseur.setPosition(240,210);
+                                    DessineOption(&fenetre, spriteCurseur, spriteFond);
+                                    MachineAEcrire(spriteTexte, &fenetre, titreOpt, 200, 25, 3.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, vsyncOpt, 300, 200, 2.2);
+                                    MachineAEcrire(spriteTexte, &fenetre, sonOpt, 350, 350, 2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, quitterOpt, 275, 500, 2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, *vsync_choixOpt, 600,200,2.2);
+                                    MachineAEcrire(spriteTexte, &fenetre, *son_choixOpt, 600, 350, 2.0);
+                                    fenetre.display();
+                                }
+                                else if (posOption==2)
+                                {
+                                    switch(sonOn)
+                                    {
+                                    case 1:
+                                        free(son_choixOpt);
+                                        *son_choixOpt=strcpy(*son_choixOpt, "OFF");
+                                        sonChoix.setVolume(0);
+                                        sonDeplacement.setVolume(0);
+                                        musiqueFond.setVolume(0);
+                                        sonOn=0;
+                                        break;
+                                    case 0:
+                                        free(son_choixOpt);
+                                        *son_choixOpt=strcpy(*son_choixOpt, "ON");
+                                        sonChoix.setVolume(100);
+                                        sonDeplacement.setVolume(100);
+                                        musiqueFond.setVolume(100);
+                                        sonOn=1;
+                                        break;
+                                    }
+                                    fenetre.clear(sf::Color::Black);
+                                    fenetre.draw(spriteFond);
+                                    MachineAEcrire(spriteTexte, &fenetre, titreOpt, 200, 25, 3.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, vsyncOpt, 300, 200, 2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, sonOpt, 350, 350, 2.2);
+                                    MachineAEcrire(spriteTexte, &fenetre, quitterOpt, 275, 500, 2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, *vsync_choixOpt, 600,200,2.0);
+                                    MachineAEcrire(spriteTexte, &fenetre, *son_choixOpt, 600, 350, 2.2);
+                                    spriteCurseur.setPosition(290,360);
+                                    fenetre.draw(spriteCurseur);
+                                    fenetre.display();
+                                }
+                            }
+
+                        }
                     }
+                    DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
+                    break;
+                case 4:
+                    funcEditor(spriteChoix, spriteTexte, &fenetre);
+                    DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
+                    sonChoix.play();
+                    break;
+                case 5:
+                    printf("Quitter");
+                    sonChoix.play();
+                    fenetre.close();
+                    musiqueFond.stop();
+                    break;
                 }
             }
-            }
-
         }
     }
-    fenetre.draw(spriteMenu);
-    fenetre.draw(spriteChoix);
-    spriteCurseur.setPosition(0,0);
-    fenetre.draw(spriteCurseur);
-    fenetre.display();
     return 0;
 }

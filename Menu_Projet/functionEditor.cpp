@@ -34,6 +34,10 @@ void funcEditor(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fene
     vue.zoom(1/0.3);
     vue.setCenter(LARGEUR/2, HAUTEUR/2);
     fenetre->setView(vue);
+    fenetre->clear();
+    fenetre->display();
+    fenetre->clear();
+    fenetre->display();
 }
 
 int createOrNew(sf::RenderWindow *fenetre, sf::Sprite tileset, sf::Sprite textTile)

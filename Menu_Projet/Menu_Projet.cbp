@@ -31,6 +31,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="functionEditor.cpp" />
+		<Unit filename="functionEditor.hpp" />
 		<Unit filename="functionMenu.cpp" />
 		<Unit filename="functionMenu.hpp" />
 		<Unit filename="main.cpp" />

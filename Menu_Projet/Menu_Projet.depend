@@ -1,16 +1,17 @@
 # depslib dependency file v1.0
-1480498728 source:p:\projetinfo1-master\menu_projet\functionmenu.cpp
+1483952002 source:p:\projetinfo1-master\menu_projet\functionmenu.cpp
 	<stdio.h>
 	<stdlib.h>
 	<SFML/Graphics.hpp>
 	"functionMenu.hpp"
 
-1480423326 p:\projetinfo1-master\menu_projet\functionmenu.hpp
+1483952058 p:\projetinfo1-master\menu_projet\functionmenu.hpp
 	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
 	<stdio.h>
 	<stdlib.h>
 
-1481618324 source:p:\projetinfo1-master\menu_projet\main.cpp
+1483952809 source:p:\projetinfo1-master\menu_projet\main.cpp
 	<stdio.h>
 	<stdlib.h>
 	<SFML/Graphics.hpp>
@@ -27,34 +28,6 @@
 	<fstream>
 	<iostream>
 
-1481617452 source:p:\projetinfo1-master\menu_projet\functioneditor.cpp
+1483619386 source:p:\projetinfo1-master\menu_projet\functioneditor.cpp
 	"functionEditor.hpp"
-
-1481976379 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet\functionmenu.cpp
-	<stdio.h>
-	<stdlib.h>
-	<SFML/Graphics.hpp>
-	"functionMenu.hpp"
-
-1481976379 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet\functionmenu.hpp
-	<SFML/Graphics.hpp>
-	<stdio.h>
-	<stdlib.h>
-
-1481976379 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet\main.cpp
-	<stdio.h>
-	<stdlib.h>
-	<SFML/Graphics.hpp>
-	<SFML/Audio.hpp>
-	"functionMenu.hpp"
-	"functionEditor.hpp"
-
-1481976379 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet\functioneditor.hpp
-	<stdio.h>
-	<stdlib.h>
-	<conio.h>
-	<string.h>
-	<SFML/Graphics.hpp>
-	<fstream>
-	<iostream>
 
