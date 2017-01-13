@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1483691681 source:p:\projetinfo1-master\test ia\ia\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	"funcIA.hpp"
+	<SFML/Graphics.hpp>
+
+1483620950 source:p:\projetinfo1-master\test ia\ia\funcia.cpp
+	"funcIA.hpp"
+
+1483620949 p:\projetinfo1-master\test ia\ia\funcia.hpp
+
