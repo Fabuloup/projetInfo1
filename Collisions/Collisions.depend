@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1485505892 source:p:\projetinfo1-master\collisions\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+
