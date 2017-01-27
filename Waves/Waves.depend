@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1484317562 source:p:\projetinfo1-master\waves\funcwaves.cpp
+1485506576 source:p:\projetinfo1-master\waves\funcwaves.cpp
 	"funcWaves.hpp"
 
-1484301614 p:\projetinfo1-master\waves\funcwaves.hpp
+1485506319 p:\projetinfo1-master\waves\funcwaves.hpp
 
-1484318544 source:p:\projetinfo1-master\waves\main.cpp
+1485506738 source:p:\projetinfo1-master\waves\main.cpp
 	<stdio.h>
 	<stdlib.h>
 	"funcWaves.hpp"
