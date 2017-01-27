@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1485504862 source:p:\projet 1ere anne\personnagedeplacement\functionperso.cpp
+	"functionPerso.hpp"
+
+1484124797 p:\projet 1ere anne\personnagedeplacement\functionperso.hpp
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<SFML/Graphics.hpp>
+
+1485505150 source:p:\projet 1ere anne\personnagedeplacement\main.cpp
+	"functionPerso.hpp"
+	"functionEditor.hpp"
+
+1485502475 source:p:\projet 1ere anne\personnagedeplacement\functioneditor.cpp
+	"functionEditor.hpp"
+
+1483999182 p:\projet 1ere anne\personnagedeplacement\functioneditor.hpp
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<string.h>
+	<SFML/Graphics.hpp>
+	<fstream>
+	<iostream>
+
