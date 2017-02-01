@@ -281,7 +281,6 @@ void drawMap(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::Render
 {
     int x=0;
     int y=0;
-    tileset.scale(3.0f, 3.0f);
     for(y=0; y<hauteur; y++)
     {
         for(x=0; x<largeur; x++)
@@ -626,44 +625,29 @@ void MachineAEcrire(sf::Sprite fontTile, sf::RenderWindow *fenetre, char* texte,
 }
 
 
-void Jouer(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre, char *nomMap, int *carte)
+void Jouer(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre)
 {
-    //exitVar passera a 1 quand le joueur aura choisi sa map
-    int exitVar = 0;
-    char informations[]="Entrez le nom de la map a charger";
-    char astuce[]="La touche TAB ajoute le .map";
-    while (exitVar == 0 and fenetre->isOpen())
+    int choixEdit =0;
+    char NomMap[100]="";
+    //choix de l'utilisateur (voir fonction)
+    choixEdit = createOrNew(fenetre, tileset, tileTexte);
+    if(choixEdit==1)
     {
-        char chemin[]="ressources/map/";
+        int carte[100];
+        loadMap(tileset, tileTexte, fenetre, NomMap, carte);
+        editor(carte, tileset, fenetre, NomMap);
+    }
+    else if (choixEdit==0)
+    {
+        char titre[]="Entrez le nom de votre map (tab ajoute le .map)";
         fenetre->clear();
-        MachineAEcrire(tileTexte, fenetre, informations, 30, 10, 0.3f);
-        MachineAEcrire(tileTexte, fenetre, astuce, 40, 20, 0.3f);
+        MachineAEcrire(tileTexte, fenetre, titre, 30, 1, 0.2f);
         fenetre->display();
         fenetre->clear();
-        MachineAEcrire(tileTexte, fenetre, informations, 30, 10, 0.3f);
-        MachineAEcrire(tileTexte, fenetre, astuce, 40, 20, 0.3f);
+        MachineAEcrire(tileTexte, fenetre, titre, 30, 1, 0.2f);
         fenetre->display();
-        scanGraphique(nomMap, tileTexte, fenetre, 20,70, 0.3f);
-        fenetre->display();
-        //on ajoute le nom du dossier au nom de la map
-        strcat(chemin, nomMap);
-        printf("%s\n", chemin);
-        FILE* fichierMap=NULL;
-        fichierMap = fopen(chemin, "r");
-        if(fichierMap==NULL)
-        {
-            printf("Impossible d'ouvrir le fichier\n");
-        }
-        else
-        {
-            int k=0;
-            for(k=0; k<100; k++)
-            {
-                carte[k]=(int)(fgetc(fichierMap)-48);
-                printf("%i\n", carte[k]);
-            }
-            fclose(fichierMap);
-            exitVar=1;
-        }
+        scanGraphique(NomMap, tileTexte, fenetre, 30, 60, 0.4f);
+        int carteDeBase[10*10]= {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
+        editor(carteDeBase, tileset, fenetre, NomMap);
     }
 }

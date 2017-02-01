@@ -29,5 +29,6 @@ void changeMapValue(int *plan, int largeurMap, int hauteurMap, int x, int y, int
 void funcEditor(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre);
 void MachineAEcrire(sf::Sprite fontTile, sf::RenderWindow *fenetre, char* texte, int posX=0, int posY=0, float taille=1.0);
 void scanGraphique(char *texte,sf::Sprite tileText, sf::RenderWindow *fenetre, int posX=0, int posY=0, float taille=1.0f);
+void Jouer(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre, char *nomMap, int *carte);
 
 #endif // FUNCTIONEDITOR_HPP_INCLUDED

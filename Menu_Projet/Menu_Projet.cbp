@@ -31,10 +31,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="funcWaves.cpp" />
+		<Unit filename="funcWaves.hpp" />
 		<Unit filename="functionEditor.cpp" />
 		<Unit filename="functionEditor.hpp" />
 		<Unit filename="functionMenu.cpp" />
 		<Unit filename="functionMenu.hpp" />
+		<Unit filename="functionPerso.cpp" />
+		<Unit filename="functionPerso.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

@@ -5,21 +5,23 @@
 	<SFML/Graphics.hpp>
 	"functionMenu.hpp"
 
-1483952058 p:\projetinfo1-master\menu_projet\functionmenu.hpp
+1483959195 p:\projetinfo1-master\menu_projet\functionmenu.hpp
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 	<stdio.h>
 	<stdlib.h>
 
-1483952809 source:p:\projetinfo1-master\menu_projet\main.cpp
+1485781412 source:p:\projetinfo1-master\menu_projet\main.cpp
 	<stdio.h>
 	<stdlib.h>
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 	"functionMenu.hpp"
 	"functionEditor.hpp"
+	"funcWaves.hpp"
+	"functionPerso.hpp"
 
-1481617071 p:\projetinfo1-master\menu_projet\functioneditor.hpp
+1485780461 p:\projetinfo1-master\menu_projet\functioneditor.hpp
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -28,6 +30,20 @@
 	<fstream>
 	<iostream>
 
-1483619386 source:p:\projetinfo1-master\menu_projet\functioneditor.cpp
+1485781280 source:p:\projetinfo1-master\menu_projet\functioneditor.cpp
 	"functionEditor.hpp"
+
+1485779482 source:p:\projetinfo1-master\menu_projet\funcwaves.cpp
+	"funcWaves.hpp"
+
+1485779481 p:\projetinfo1-master\menu_projet\funcwaves.hpp
+
+1485779647 p:\projetinfo1-master\menu_projet\functionperso.hpp
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<SFML/Graphics.hpp>
+
+1485779889 source:p:\projetinfo1-master\menu_projet\functionperso.cpp
+	"functionPerso.hpp"
 
