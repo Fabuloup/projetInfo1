@@ -281,7 +281,7 @@ void drawMap(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::Render
 {
     int x=0;
     int y=0;
-    tileset.scale(3.0f, 3.0f);
+    //tileset.scale(3.0f, 3.0f);
     for(y=0; y<hauteur; y++)
     {
         for(x=0; x<largeur; x++)
@@ -351,6 +351,82 @@ void drawMap(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::Render
         }
     }
 }
+
+void drawMapGame(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::RenderWindow *fenetre, int decalageX, int decalageY)
+{
+    int x=0;
+    int y=0;
+    tileset.scale(3.0f, 3.0f);
+    for(y=0; y<hauteur; y++)
+    {
+        for(x=0; x<largeur; x++)
+        {
+            switch(plan[y*largeur+x])
+            {
+            case 0:
+                tileset.setTextureRect(sf::IntRect(30,0,10,10));
+                break;
+            case 1:
+                tileset.setTextureRect(sf::IntRect(40, 0, 10, 10));
+                break;
+            case 2:
+                tileset.setTextureRect(sf::IntRect(50, 0, 10, 10));
+                break;
+            case 3:
+                tileset.setTextureRect(sf::IntRect(30, 10, 10, 10));
+                break;
+            case 4:
+                tileset.setTextureRect(sf::IntRect(40, 10, 10, 10));
+                break;
+            case 5:
+                tileset.setTextureRect(sf::IntRect(50, 10, 10, 10));
+                break;
+            case 6:
+                tileset.setTextureRect(sf::IntRect(30, 20, 10, 10));
+                break;
+            case 7:
+                tileset.setTextureRect(sf::IntRect(40, 20, 10, 10));
+                break;
+            case 8:
+                tileset.setTextureRect(sf::IntRect(50, 20, 10, 10));
+                break;
+            case 9:
+                tileset.setTextureRect(sf::IntRect(0, 0, 10, 10));
+                break;
+            case 10:
+                tileset.setTextureRect(sf::IntRect(10, 0, 10, 10));
+                break;
+            case 11:
+                tileset.setTextureRect(sf::IntRect(20, 0, 10, 10));
+                break;
+            case 12:
+                tileset.setTextureRect(sf::IntRect(0, 10, 10, 10));
+                break;
+            case 13:
+                tileset.setTextureRect(sf::IntRect(10, 10, 10, 10));
+                break;
+            case 14:
+                tileset.setTextureRect(sf::IntRect(20, 10, 10, 10));
+                break;
+            case 15:
+                tileset.setTextureRect(sf::IntRect(0, 20, 10, 10));
+                break;
+            case 16:
+                tileset.setTextureRect(sf::IntRect(10, 20, 10, 10));
+                break;
+            case 17:
+                tileset.setTextureRect(sf::IntRect(20, 20, 10, 10));
+                break;
+            default:
+                tileset.setTextureRect(sf::IntRect(40, 10, 10, 10));
+                break;
+            }
+            tileset.setPosition(sf::Vector2f(x*60+decalageX, y*60+decalageY));
+            fenetre->draw(tileset);
+        }
+    }
+}
+
 //on lui passe en parametres la map et la position de la souris et il peint la map
 void changeMapValue(int *plan, int largeurMap, int hauteurMap, int x, int y, int tileSelected, int decalageX, int decalageY)
 {
@@ -625,6 +701,46 @@ void MachineAEcrire(sf::Sprite fontTile, sf::RenderWindow *fenetre, char* texte,
     }
 }
 
+void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
+{
+    sf::Event event;
+    sf::Vector2i mousePos;
+
+    spriteTexture.scale(sf::Vector2f(2.0f, 2.0f));
+
+    heros ninja(160, 160, 3, 100);
+
+    while(fenetre->isOpen())
+    {
+        while(fenetre->pollEvent(event))
+        {
+            switch(event.type)
+            {
+            case sf::Event::Closed:
+                fenetre->close();
+                break;
+            case sf::Event::MouseMoved:
+                mousePos = sf::Mouse::getPosition(*fenetre);
+                break;
+            case sf::Event::MouseButtonPressed:
+                ninja.setIsSlash(400);
+                break;
+            default:
+                break;
+            }
+        }
+        deplacementSouris(&ninja, mousePos.x, mousePos.y, planMap);
+        setTexureRectNinja(&spriteTexture, ninja.getWalkStep(), ninja.getSlashStep());
+        spriteTexture.setPosition(ninja.getX()-20,ninja.getY()-20);
+
+        fenetre->clear();
+        drawMapGame(planMap, 10, 10, spriteTexture,  fenetre, 0, 0);
+        fenetre->draw(spriteTexture);
+        fenetre->display();
+    }
+    spriteTexture.scale(sf::Vector2f(1.0f, 1.0f));
+}
+
 
 void Jouer(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre, char *nomMap, int *carte)
 {
@@ -636,14 +752,14 @@ void Jouer(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre, 
     {
         char chemin[]="ressources/map/";
         fenetre->clear();
-        MachineAEcrire(tileTexte, fenetre, informations, 30, 10, 0.3f);
-        MachineAEcrire(tileTexte, fenetre, astuce, 40, 20, 0.3f);
+        MachineAEcrire(tileTexte, fenetre, informations, 30, 10, 0.6f);
+        MachineAEcrire(tileTexte, fenetre, astuce, 40, 23, 0.6f);
         fenetre->display();
         fenetre->clear();
-        MachineAEcrire(tileTexte, fenetre, informations, 30, 10, 0.3f);
-        MachineAEcrire(tileTexte, fenetre, astuce, 40, 20, 0.3f);
+        MachineAEcrire(tileTexte, fenetre, informations, 30, 10, 0.6f);
+        MachineAEcrire(tileTexte, fenetre, astuce, 40, 23, 0.6f);
         fenetre->display();
-        scanGraphique(nomMap, tileTexte, fenetre, 20,70, 0.3f);
+        scanGraphique(nomMap, tileTexte, fenetre, 20,70, 0.6f);
         fenetre->display();
         //on ajoute le nom du dossier au nom de la map
         strcat(chemin, nomMap);

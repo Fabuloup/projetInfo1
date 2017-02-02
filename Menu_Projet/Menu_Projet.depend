@@ -47,3 +47,52 @@
 1485779889 source:p:\projetinfo1-master\menu_projet\functionperso.cpp
 	"functionPerso.hpp"
 
+1485964966 source:p:\projet 1ere anne\projetinfo1-master\projetinfo1-master\menu_projet\functioneditor.cpp
+	"functionEditor.hpp"
+
+1485964747 p:\projet 1ere anne\projetinfo1-master\projetinfo1-master\menu_projet\functioneditor.hpp
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<string.h>
+	<SFML/Graphics.hpp>
+	<fstream>
+	<iostream>
+	"functionPerso.hpp"
+
+1485920936 source:p:\projet 1ere anne\projetinfo1-master\projetinfo1-master\menu_projet\functionmenu.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+	"functionMenu.hpp"
+
+1485920936 p:\projet 1ere anne\projetinfo1-master\projetinfo1-master\menu_projet\functionmenu.hpp
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	<stdio.h>
+	<stdlib.h>
+
+1485965688 source:p:\projet 1ere anne\projetinfo1-master\projetinfo1-master\menu_projet\functionperso.cpp
+	"functionPerso.hpp"
+
+1485920936 p:\projet 1ere anne\projetinfo1-master\projetinfo1-master\menu_projet\functionperso.hpp
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<SFML/Graphics.hpp>
+
+1485920936 source:p:\projet 1ere anne\projetinfo1-master\projetinfo1-master\menu_projet\funcwaves.cpp
+	"funcWaves.hpp"
+
+1485920936 p:\projet 1ere anne\projetinfo1-master\projetinfo1-master\menu_projet\funcwaves.hpp
+
+1485963474 source:p:\projet 1ere anne\projetinfo1-master\projetinfo1-master\menu_projet\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	"functionMenu.hpp"
+	"functionPerso.hpp"
+	"functionEditor.hpp"
+	"funcWaves.hpp"
+

@@ -3,9 +3,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "functionMenu.hpp"
+#include "functionPerso.hpp"
 #include "functionEditor.hpp"
 #include "funcWaves.hpp"
-#include "functionPerso.hpp"
 
 #define LARGEUR_FENETRE 800
 #define HAUTEUR_FENETRE 600
@@ -219,6 +219,7 @@ int main()
                 case 1:
                     printf("Jouer");
                     Jouer(spriteChoix, spriteTexte, &fenetre, nomMap, carte);
+                    InGame(&fenetre, carte, spriteChoix);
                     break;
                 case 2:
                     printf("Multi");

@@ -15,3 +15,6 @@ renoi.map
 renoi.map
 renoi.map
 renoi.map
+default.map
+default.map
+default.map
