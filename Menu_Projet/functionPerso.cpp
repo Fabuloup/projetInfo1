@@ -292,10 +292,6 @@ int collisionNinjaMur(int ninjaX, int ninjaY, int* plan, int direction)
             {
                 retour=1;
             }
-            if(((ninjaY-22)/tailleCase) < 0)
-            {
-                retour = 1;
-            }
         }
         break;
     case 1:
@@ -305,10 +301,6 @@ int collisionNinjaMur(int ninjaX, int ninjaY, int* plan, int direction)
             if(caseDOWN!=4 && caseDOWN<9)
             {
                 retour= 1;
-            }
-            if(((ninjaY+22)/tailleCase) >= nbCase)
-            {
-                retour = 1;
             }
         }
         break;
@@ -320,10 +312,6 @@ int collisionNinjaMur(int ninjaX, int ninjaY, int* plan, int direction)
             {
                 retour= 1;
             }
-            if(((ninjaX-11)/tailleCase) < 0)
-            {
-                retour = 1;
-            }
         }
         break;
     case 3:
@@ -333,10 +321,6 @@ int collisionNinjaMur(int ninjaX, int ninjaY, int* plan, int direction)
             if(caseRIGHT!=4 && caseRIGHT<9)
             {
                 retour= 1;
-            }
-            if(((ninjaX+11)/tailleCase) >= nbCase)
-            {
-                retour = 1;
             }
         }
         break;

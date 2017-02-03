@@ -10,8 +10,6 @@
 #include <fstream>
 #include <iostream>
 
-#include "functionPerso.hpp"
-
 #define ZOOM 0.3
 #define LARGEUR 800
 #define HAUTEUR 600
@@ -32,7 +30,5 @@ void funcEditor(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fene
 void MachineAEcrire(sf::Sprite fontTile, sf::RenderWindow *fenetre, char* texte, int posX=0, int posY=0, float taille=1.0);
 void scanGraphique(char *texte,sf::Sprite tileText, sf::RenderWindow *fenetre, int posX=0, int posY=0, float taille=1.0f);
 void Jouer(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre, char *nomMap, int *carte);
-void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture);
-void drawMapGame(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::RenderWindow *fenetre, int decalageX, int decalageY);
 
 #endif // FUNCTIONEDITOR_HPP_INCLUDED
