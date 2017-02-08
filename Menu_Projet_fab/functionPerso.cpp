@@ -347,13 +347,25 @@ int collisionNinjaMur(int ninjaX, int ninjaY, int* plan, int direction)
     return retour;
 }
 
-void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan)
+void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague)
 {
     int k=0;
         for(k=0; k<ninja->getSpeed(); k++)
         {
             int distanceY=abs(mouseY-ninja->getY());
             int distanceX=abs(mouseX-ninja->getX());
+
+            //on test la décédence
+            int i=0;
+            for(i=0; i<MAXENNEMY; i++)
+            {
+                if(vague[i].get_x() > ninja->getX()-10 && vague[i].get_x() < ninja->getX()+10 && vague[i].get_y() > ninja->getY()-20 && vague[i].get_y() < ninja->getY()+20 && ninja->getSlashStep()>0)
+                {
+                    vague[i].setActif(0);
+                }
+            }
+            //fini
+
             if(distanceY > distanceX && (distanceX>5 || distanceY>5))
             {
                 if(mouseY>ninja->getY() && collisionNinjaMur(ninja->getX(), ninja->getY(), plan, 1)==0)

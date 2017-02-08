@@ -6,6 +6,8 @@
 #include <math.h>
 #include <SFML/Graphics.hpp>
 
+#include "funcWaves.hpp"
+
 class heros
 {
 public:
@@ -39,7 +41,7 @@ private:
     int h_isSlash;
 };
 
-void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan);
+void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague);
 void setTexureRectNinja(sf::Sprite* spriteGeneral, int ninjaWalkStep, int slash);
 
 #endif // FUNCTIONPERSO_HPP_INCLUDED

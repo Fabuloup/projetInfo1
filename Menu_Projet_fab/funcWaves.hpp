@@ -1,6 +1,8 @@
 #ifndef FUNCWAVES_HPP_INCLUDED
 #define FUNCWAVES_HPP_INCLUDED
 
+#define MAXENNEMY 20
+
 class ennemy
 {
 private:
