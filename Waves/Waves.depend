@@ -10,3 +10,14 @@
 	"funcWaves.hpp"
 	<SFML/Graphics.hpp>
 
+1485495498 source:p:\projetinfo1-master\projetinfo1-master_2\projetinfo1-master\waves\funcwaves.cpp
+	"funcWaves.hpp"
+
+1485495498 p:\projetinfo1-master\projetinfo1-master_2\projetinfo1-master\waves\funcwaves.hpp
+
+1485951879 source:p:\projetinfo1-master\projetinfo1-master_2\projetinfo1-master\waves\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	"funcWaves.hpp"
+	<SFML/Graphics.hpp>
+

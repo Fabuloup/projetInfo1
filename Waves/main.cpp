@@ -6,10 +6,16 @@
 int main()
 {
     sf::RenderWindow fenetre(sf::VideoMode(800,600), "La soeur de Jean");
+    fenetre.setFramerateLimit(60);
 
+    //Gestion timer
+    sf::Clock clock;
+    sf::Time temps=sf::seconds(4.0);
+    int pos=0;
+    int x,y, aleat;
     //Chargement texture+création tableau ennemis
-    ennemy vague[20];
-    int max=10, i,j, slime_etat=0, nb_nonActif, k;
+    ennemy vague[100];
+    int max=3, i,j, slime_etat=0, nb_nonActif, k, anim=0;
     sf::Event event;
     sf::Sprite spriteSlime;
     sf::Texture textureSlime, textureSlime2;
@@ -18,20 +24,51 @@ int main()
     if (!textureSlime2.loadFromFile("slime2.png"))
         printf("Problème\n");
     spriteSlime.setTexture(textureSlime);
-    int posxrekt=400, posyrekt=300, pas=10, pasrekt=10;
+    int posxrekt=400, posyrekt=300, pas=2, pasrekt=10;
     int pas_droite, pas_gauche, pas_haut, pas_bas;
     sf::RectangleShape rekt(sf::Vector2f(10,10));
     rekt.setFillColor(sf::Color::Red);
     rekt.setPosition(posxrekt, posyrekt);
     fenetre.draw(rekt);
-    //Créations des 10 premiers ennemis
+
+    //Créations des 'max' premiers ennemis
     for (i=0; i<max; i++)
     {
-        vague[i].setPosition(40*i, 40*i);
+        vague[i].setPosition(200+200*i, 0);
         vague[i].setActif(1);
     }
     while (fenetre.isOpen())
     {
+        //Temps
+        if (clock.getElapsedTime()>temps)
+        {
+            printf("time");
+            clock.restart();
+            aleat=rand()%4;
+            printf("%i", aleat);
+            for (i=max; i<max+3; i++)
+            {
+                if (aleat==0)
+                {
+                    vague[i].setPosition(0,200+((i-max)*200));
+                }
+                else if (aleat==1)
+                {
+                    vague[i].setPosition(200+((i-max)*200), 600);
+                }
+                else if (aleat==2)
+                {
+                    vague[i].setPosition(800,200+((i-max)*200));
+                }
+                else if (aleat==3)
+                {
+                    vague[i].setPosition(200+((i-max)*200),0);
+                }
+                vague[i].setActif(1);
+                //printf("%i", i);
+            }
+            max=max+3;
+        }
         //test de l'état des slimes pour la texture
         if (slime_etat==0)
             spriteSlime.setTexture(textureSlime);
@@ -114,12 +151,18 @@ int main()
             fenetre.draw(spriteSlime);
             fenetre.draw(rekt);
         }
-        if (slime_etat==1)
+        if (slime_etat==1 && anim==10)
+        {
             slime_etat=0;
-        else if (slime_etat==0)
+            anim=0;
+        }
+        else if (slime_etat==0 && anim==10)
+        {
             slime_etat=1;
+            anim=0;
+        }
         fenetre.display();
-        sf::sleep(sf::milliseconds(150));
+        anim=anim+1;
     }
     return 0;
 }
