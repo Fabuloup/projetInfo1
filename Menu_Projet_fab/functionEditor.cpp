@@ -707,8 +707,12 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
     sf::Vector2i mousePos;
 
     //code Sylvain
+    //Gestion timer
+    sf::Clock clock;
+    sf::Time temps=sf::seconds(4.0);
+
     ennemy vague[20];
-    int max=10, i,j, slime_etat=0, nb_nonActif, k;
+    int max=20, i,j, slime_etat=0, nb_nonActif, k;
     sf::Sprite spriteSlime;
     sf::Texture textureSlime, textureSlime2;
     if (!textureSlime.loadFromFile("slime.png"))
@@ -718,12 +722,12 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
     spriteSlime.setTexture(textureSlime);
 
     int pas_droite, pas_gauche, pas_haut, pas_bas;
-    int pas=3;
+    int pas=3, aleat;
     int slimeStep=5;
 
-    for (i=0; i<max; i++)
+    for (i=0; i<3; i++)
     {
-        vague[i].setPosition(40*i, 40*i);
+        vague[i].setPosition(240+40*i, 80+40*i);
         vague[i].setActif(1);
     }
     //Code Sylvain
@@ -736,6 +740,42 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
     {
 
         //code Sylvain
+        //Temps
+        if (clock.getElapsedTime()>temps)
+        {
+            printf("time");
+            clock.restart();
+            aleat=rand()%4;
+            printf("%i", aleat);
+            for (j=0; j<3; j++)
+            {
+                for(i=0; i<max; i++)
+                {
+                    if(vague[i].isActif()==0)
+                    {
+                        if (aleat==0)
+                        {
+                            vague[i].setPosition(0,240+((i)*40));
+                        }
+                        else if (aleat==1)
+                        {
+                            vague[i].setPosition(500+((i)*40), 240);
+                        }
+                        else if (aleat==2)
+                        {
+                            vague[i].setPosition(240,500+((i)*40));
+                        }
+                        else if (aleat==3)
+                        {
+                            vague[i].setPosition(240+((i)*40),10);
+                        }
+                        vague[i].setActif(1);
+                        //printf("%i", i);
+                        break;
+                    }
+                }
+            }
+        }
         //test de l'état des slimes pour la texture
         if (slime_etat==0 and slimeStep<=0)
             spriteSlime.setTexture(textureSlime);
@@ -777,70 +817,76 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
             pas_bas=1;
             pas_gauche=1;
             pas_droite=1;
-            for (k=0; k<pas; k++)
-                //Faire avancer de 10
+            if(vague[i].isActif()==1)
             {
-                if(slimeStep == 0)
+                for (k=0; k<pas; k++)
+                    //Faire avancer de 10
                 {
-                    for (j=0; j<max; j++)
-                        //Collisions slime 1 par 1
+                    if(slimeStep == 0)
                     {
-                        //Collision entre i et j
-                        //if ((Collision(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20))==true && i!=j)
-                        //vague[i].changePas(0);
-                        //Colision haut, bas, droite, gauche
-                        //Pas haut, bas, droite, gauche
-                        if (collision_droite(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20)==true && i!=j)
+                        for (j=0; j<max; j++)
+                            //Collisions slime 1 par 1
                         {
-                            pas_droite=0;
-                        }
-                        if (collision_gauche(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20)==true && i!=j)
-                        {
-                            pas_gauche=0;
-                        }
-                        if (collision_haut(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20)==true && i!=j)
-                        {
-                            pas_haut=0;
-                        }
-                        if (collision_bas(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20)==true && i!=j)
-                        {
-                            pas_bas=0;
+                            //Collision entre i et j
+                            //if ((Collision(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20))==true && i!=j)
+                            //vague[i].changePas(0);
+                            //Colision haut, bas, droite, gauche
+                            //Pas haut, bas, droite, gauche
+                            if (collision_droite(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20)==true && i!=j)
+                            {
+                                pas_droite=0;
+                            }
+                            if (collision_gauche(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20)==true && i!=j)
+                            {
+                                pas_gauche=0;
+                            }
+                            if (collision_haut(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20)==true && i!=j)
+                            {
+                                pas_haut=0;
+                            }
+                            if (collision_bas(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20)==true && i!=j)
+                            {
+                                pas_bas=0;
+                            }
                         }
                     }
+                    else
+                    {
+                        pas_bas=0;
+                        pas_droite=0;
+                        pas_gauche=0;
+                        pas_haut=0;
+                    }
+                    if (ninja.getX()-vague[i].get_x()>0 && pas_droite!=0)
+                    {
+                        vague[i].setPosition(vague[i].get_x()+1, vague[i].get_y());
+                    }
+                    else if (ninja.getX()-vague[i].get_x()<0 && pas_gauche!=0)
+                    {
+                        vague[i].setPosition(vague[i].get_x()-1, vague[i].get_y());
+                    }
+                    if (ninja.getY()-vague[i].get_y()>0 && pas_bas!=0)
+                    {
+                        vague[i].setPosition(vague[i].get_x(), vague[i].get_y()+1);
+                    }
+                    else if (ninja.getY()-vague[i].get_y()<0  && pas_haut!=0)
+                    {
+                        vague[i].setPosition(vague[i].get_x(), vague[i].get_y()-1);
+                    }
+                    spriteSlime.setPosition(vague[i].get_x(), vague[i].get_y());
                 }
-                else
-                {
-                    pas_bas=0;
-                    pas_droite=0;
-                    pas_gauche=0;
-                    pas_haut=0;
-                }
-                if (ninja.getX()-vague[i].get_x()>0 && pas_droite!=0)
-                {
-                    vague[i].setPosition(vague[i].get_x()+1, vague[i].get_y());
-                }
-                else if (ninja.getX()-vague[i].get_x()<0 && pas_gauche!=0)
-                {
-                    vague[i].setPosition(vague[i].get_x()-1, vague[i].get_y());
-                }
-                if (ninja.getY()-vague[i].get_y()>0 && pas_bas!=0)
-                {
-                    vague[i].setPosition(vague[i].get_x(), vague[i].get_y()+1);
-                }
-                else if (ninja.getY()-vague[i].get_y()<0  && pas_haut!=0)
-                {
-                    vague[i].setPosition(vague[i].get_x(), vague[i].get_y()-1);
-                }
-                spriteSlime.setPosition(vague[i].get_x(), vague[i].get_y());
             }
             if(vague[i].isActif()==1)
-            fenetre->draw(spriteSlime);
+            {
+                fenetre->draw(spriteSlime);
+            }
         }
         if (slime_etat==1)
             slime_etat=0;
         else if (slime_etat==0)
             slime_etat=1;
-        if(slimeStep==0)
+        slimeStep-=1;
+        if(slimeStep<=0)
         {
             slimeStep=3;
         }
