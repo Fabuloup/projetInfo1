@@ -38,7 +38,7 @@ void heros::setLife(int m_life)
 
 void heros::findAngle(int mouse_x, int mouse_y)
 {
-    h_angle=atan((h_y-mouse_y)/(h_x-mouse_x));
+    h_angle=atan2((h_y-mouse_y),(h_x-mouse_x));
 }
 
 void heros::setWalkStep(int m_walkStep)
@@ -354,6 +354,19 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
         {
             int distanceY=abs(mouseY-ninja->getY());
             int distanceX=abs(mouseX-ninja->getX());
+
+            /*if(ninja->getSlashStep() > 0)
+            {
+                distanceY = tan(ninja->getAngle())*(mouseX-ninja->getX());
+                distanceX = tan(ninja->getAngle())*(mouseY-ninja->getY());
+                mouseX += distanceX;
+                mouseY += distanceY;
+                printf("%i", distanceY);
+            }
+            else
+            {
+                ninja->findAngle(mouseX, mouseY);
+            }*/
 
             //on test la décédence
             int i=0;
