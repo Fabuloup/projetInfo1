@@ -355,18 +355,19 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
             int distanceY=abs(mouseY-ninja->getY());
             int distanceX=abs(mouseX-ninja->getX());
 
-            /*if(ninja->getSlashStep() > 0)
+            if(ninja->getSlashStep() > 0)
             {
-                distanceY = tan(ninja->getAngle())*(mouseX-ninja->getX());
-                distanceX = tan(ninja->getAngle())*(mouseY-ninja->getY());
-                mouseX += distanceX;
-                mouseY += distanceY;
-                printf("%i", distanceY);
+                distanceY = -sin(ninja->getAngle())*100;
+                distanceX = -cos(ninja->getAngle())*100;
+                mouseX = ninja->getX()+distanceX;
+                mouseY = ninja->getY()+distanceY;
+                printf("%f\n", ninja->getAngle());
+                printf("%i\n", distanceY);
             }
             else
             {
                 ninja->findAngle(mouseX, mouseY);
-            }*/
+            }
 
             //on test la décédence
             int i=0;
