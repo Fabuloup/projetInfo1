@@ -48,7 +48,8 @@ void heros::setWalkStep(int m_walkStep)
 
 void heros::setIsSlash(int m_slash)
 {
-    h_isSlash=m_slash;
+    if(h_isSlash<=0)
+        h_isSlash=m_slash;
 }
 
 int heros::getX()
@@ -355,32 +356,50 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
             int distanceY=abs(mouseY-ninja->getY());
             int distanceX=abs(mouseX-ninja->getX());
 
-            if(ninja->getSlashStep() > 0)
+            if(ninja->getSlashStep() > 200)
             {
                 distanceY = -sin(ninja->getAngle())*100;
                 distanceX = -cos(ninja->getAngle())*100;
+                if(distanceX < 0)
+                {
+                    distanceX-=10;
+                }
+                else
+                {
+                    distanceX += 10;
+                }
+                if(distanceY < 0)
+                {
+                    distanceY -= 10;
+                }
+                else
+                {
+                    distanceY += 10;
+                }
+                printf("%i\n",distanceX);
                 mouseX = ninja->getX()+distanceX;
                 mouseY = ninja->getY()+distanceY;
-                printf("%f\n", ninja->getAngle());
-                printf("%i\n", distanceY);
+                //printf("%f\n", ninja->getAngle());
+                //printf("%i\n", distanceY);
             }
             else
             {
                 ninja->findAngle(mouseX, mouseY);
             }
 
+            //printf("Slash step : %i\n", ninja->getSlashStep());
+
             //on test la décédence
             int i=0;
             for(i=0; i<MAXENNEMY; i++)
             {
-                if(vague[i].get_x() > ninja->getX()-10 && vague[i].get_x() < ninja->getX()+10 && vague[i].get_y() > ninja->getY()-20 && vague[i].get_y() < ninja->getY()+20 && ninja->getSlashStep()>0)
+                if(vague[i].get_x() > ninja->getX()-10 && vague[i].get_x() < ninja->getX()+10 && vague[i].get_y() > ninja->getY()-20 && vague[i].get_y() < ninja->getY()+20 && ninja->getSlashStep()>200)
                 {
                     vague[i].setActif(0);
                 }
             }
             //fini
-
-            if(distanceY > distanceX && (distanceX>5 || distanceY>5))
+            if(distanceY > distanceX && (abs(distanceX)>5 || abs(distanceY)>5))
             {
                 if(mouseY>ninja->getY() && collisionNinjaMur(ninja->getX(), ninja->getY(), plan, 1)==0)
                 {
@@ -409,7 +428,7 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
                     ninja->walkY(-1);
                 }
             }
-            else if(distanceX>5 || distanceY>5)
+            else if(abs(distanceX)>5 || abs(distanceY)>5)
             {
                 if(mouseX>ninja->getX() && collisionNinjaMur(ninja->getX(), ninja->getY(), plan, 3)==0)
                 {

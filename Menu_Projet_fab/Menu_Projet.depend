@@ -147,3 +147,54 @@
 	"functionEditor.hpp"
 	"funcWaves.hpp"
 
+1487665663 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functioneditor.cpp
+	"functionEditor.hpp"
+
+1486545883 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functioneditor.hpp
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<string.h>
+	<SFML/Graphics.hpp>
+	<fstream>
+	<iostream>
+	"functionPerso.hpp"
+	"funcWaves.hpp"
+
+1486548253 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionperso.hpp
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<SFML/Graphics.hpp>
+	"funcWaves.hpp"
+
+1487149584 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\funcwaves.hpp
+
+1486547291 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionmenu.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+	"functionMenu.hpp"
+
+1486101516 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionmenu.hpp
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	<stdio.h>
+	<stdlib.h>
+
+1487665284 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionperso.cpp
+	"functionPerso.hpp"
+
+1487149505 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\funcwaves.cpp
+	"funcWaves.hpp"
+
+1486101516 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	"functionMenu.hpp"
+	"functionPerso.hpp"
+	"functionEditor.hpp"
+	"funcWaves.hpp"
+
