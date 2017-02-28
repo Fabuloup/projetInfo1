@@ -1,7 +1,22 @@
 # depslib dependency file v1.0
-1486024797 source:p:\projetinfo1-master\boss\main.cpp
+1487343313 source:p:\projetinfo1-master\boss\main.cpp
 	<stdio.h>
 	<stdlib.h>
 	<SFML/Graphics.hpp>
 	<math.h>
+	<time.h>
+	<iostream>
+	"boss.hpp"
+	"fireball.hpp"
+
+1487074218 p:\projetinfo1-master\boss\boss.hpp
+
+1487074198 source:p:\projetinfo1-master\boss\boss.cpp
+	"boss.hpp"
+
+1487161181 source:p:\projetinfo1-master\boss\fireball.cpp
+	"fireball.hpp"
+	<math.h>
+
+1487161062 p:\projetinfo1-master\boss\fireball.hpp
 
