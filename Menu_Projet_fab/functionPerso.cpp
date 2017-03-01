@@ -348,7 +348,7 @@ int collisionNinjaMur(int ninjaX, int ninjaY, int* plan, int direction)
     return retour;
 }
 
-void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague)
+void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague, int* score)
 {
     int k=0;
         for(k=0; k<ninja->getSpeed(); k++)
@@ -390,11 +390,17 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
             //printf("Slash step : %i\n", ninja->getSlashStep());
 
             //on test la décédence
+            //on test la position des ennemis pour savoir si on les à touchés
+            //si oui, on les considère comme mort
             int i=0;
             for(i=0; i<MAXENNEMY; i++)
             {
                 if(vague[i].get_x() > ninja->getX()-10 && vague[i].get_x() < ninja->getX()+10 && vague[i].get_y() > ninja->getY()-20 && vague[i].get_y() < ninja->getY()+20 && ninja->getSlashStep()>200)
                 {
+                    if(vague[i].isActif() == 1)
+                    {
+                        *score += 100;
+                    }
                     vague[i].setActif(0);
                 }
             }

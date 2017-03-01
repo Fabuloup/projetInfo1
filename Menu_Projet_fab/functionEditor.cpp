@@ -708,6 +708,9 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
     sf::Event event;
     sf::Vector2i mousePos;
 
+    int score = 0;
+    char scoreTXT[100] = "Score : ";
+
 
     //code Sylvain
     //Gestion timer
@@ -853,13 +856,16 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
                 break;
             }
         }
-        deplacementSouris(&ninja, mousePos.x, mousePos.y, planMap, vague);
+        deplacementSouris(&ninja, mousePos.x, mousePos.y, planMap, vague, &score);
         setTexureRectNinja(&spriteTexture, ninja.getWalkStep(), ninja.getSlashStep());
         spriteTexture.setPosition(ninja.getX()-20,ninja.getY()-20);
 
         //code sylvain
         fenetre->clear();
         drawMapGame(planMap, 10, 10, spriteTexture,  fenetre, 0, 0);
+
+        //scoreTXT[2] = '0';
+        MachineAEcrire(spriteTexte, fenetre, scoreTXT, 610, 100, 0.8);
         //Slimes 1 par 1
         for (i=0; i<max; i++)
         {
