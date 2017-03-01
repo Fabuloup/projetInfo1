@@ -16,6 +16,26 @@ void ennemy::setPosition(int m_x, int m_y)
     e_y=m_y;
 }
 
+int ennemy::getType()
+{
+    return e_type;
+}
+
+void ennemy::setType(int new_type)
+{
+    e_type=new_type;
+}
+
+void ennemy::setZone(int new_zone)
+{
+    e_zone=new_zone;
+}
+
+int ennemy::getZone()
+{
+    return e_zone;
+}
+
 int ennemy::get_x()
 {
     return e_x;
@@ -34,17 +54,6 @@ void ennemy::setActif(int m_actif)
 int ennemy::isActif()
 {
     return e_actif;
-}
-
-bool Collision(int pos_x_p,int pos_y_p,int pos_x_ia, int pos_y_ia, int largeur_p, int hauteur_p, int largeur_ia, int hauteur_ia)
-{
-    if((pos_x_ia >= pos_x_p + largeur_p)      // trop à droite
-            || (pos_x_ia + largeur_ia <=pos_x_p) // trop à gauche
-            || (pos_y_ia >= pos_y_p + hauteur_p) // trop en bas
-            || (pos_y_ia + hauteur_ia <= pos_y_p))  // trop en haut
-        return false;
-    else
-        return true;
 }
 
 bool collision_haut (int posx_p, int posy_p, int posx_ia, int posy_ia, int largeur_p, int hauteur_p, int largeur_ia, int hauteur_ia)

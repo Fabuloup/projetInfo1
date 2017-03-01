@@ -31,6 +31,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="fireball.cpp" />
+		<Unit filename="fireball.hpp" />
 		<Unit filename="funcWaves.cpp" />
 		<Unit filename="funcWaves.hpp" />
 		<Unit filename="functionEditor.cpp" />

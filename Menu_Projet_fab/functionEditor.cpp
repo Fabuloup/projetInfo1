@@ -1,4 +1,6 @@
 #include "functionEditor.hpp"
+#include "fireball.hpp"
+#include "functionMenu.hpp"
 
 // demande dans l'invite de commande ce que souhaite faire l'utilisateur (editer ou creer une nouvelle map
 
@@ -701,25 +703,34 @@ void MachineAEcrire(sf::Sprite fontTile, sf::RenderWindow *fenetre, char* texte,
     }
 }
 
-void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
+void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, sf::Sprite spriteTexte, sf::Sprite spriteCurseur)
 {
     sf::Event event;
     sf::Vector2i mousePos;
+
 
     //code Sylvain
     //Gestion timer
     sf::Clock clock;
     sf::Time temps=sf::seconds(4.0);
+    //Tableau de boules de feu
+    Fireball fireball[20];
 
     ennemy vague[20];
-    int max=20, i,j, slime_etat=0, nb_nonActif, k;
-    sf::Sprite spriteSlime;
-    sf::Texture textureSlime, textureSlime2;
+    int max=20, i,j, slime_etat=0, nb_nonActif, k, nbboule=-1, retourMenu=0;
+    sf::Sprite spriteSlime, spriteMage, spriteFireball_mage;
+    sf::Texture textureSlime, textureSlime2, textureMage, textureFireball_mage;
+    if (!textureFireball_mage.loadFromFile("fireball_mage.png"))
+        printf("Problème\n");
     if (!textureSlime.loadFromFile("slime.png"))
         printf("Problème\n");
     if (!textureSlime2.loadFromFile("slime2.png"))
         printf("Problème\n");
+    if (!textureMage.loadFromFile("mage.png"))
+        printf("Problème\n");
     spriteSlime.setTexture(textureSlime);
+    spriteFireball_mage.setTexture(textureFireball_mage);
+    spriteMage.setTexture(textureMage);
 
     int pas_droite, pas_gauche, pas_haut, pas_bas;
     int pas=3, aleat;
@@ -729,6 +740,13 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
     {
         vague[i].setPosition(240+40*i, 80+40*i);
         vague[i].setActif(1);
+        vague[i].setType(0);
+        vague[i].setZone(0);
+        if (i==2)
+        {
+            vague[i].setType(1);
+            vague[i].setZone(100);
+        }
     }
     //Code Sylvain
 
@@ -736,7 +754,7 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
 
     heros ninja(160, 160, 3, 100);
 
-    while(fenetre->isOpen())
+    while(fenetre->isOpen() && retourMenu==0)
     {
 
         //code Sylvain
@@ -770,19 +788,42 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
                             vague[i].setPosition(240+((i)*40),10);
                         }
                         vague[i].setActif(1);
-                        //printf("%i", i);
+                        vague[i].setType(0);
+                        vague[i].setZone(0);
+                        if (int a = rand()%10<2)
+                        {
+                            vague[i].setType(1);
+                            vague[i].setZone(100);
+                        }
                         break;
                     }
                 }
             }
+            max=max+3;
         }
         //test de l'état des slimes pour la texture
-        if (slime_etat==0 and slimeStep<=0)
+        /*if (slime_etat==0 and slimeStep<=0)
+        {
             spriteSlime.setTexture(textureSlime);
+            slimeStep = 10;
+            slime_etat = 1;
+        }
         else if (slime_etat==1 and slimeStep<=0)
+        {
             spriteSlime.setTexture(textureSlime2);
+            slimeStep = 10;
+            slime_etat = 0;
+        }
         else
-            slimeStep-=1;
+            slimeStep-=1;*/
+        if (slimeStep <= 0)
+        {
+            slimeStep = 2;
+        }
+        else
+        {
+            slimeStep -= 1;
+        }
 
         nb_nonActif=0;
         //code Sylvain
@@ -790,11 +831,20 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
         {
             switch(event.type)
             {
+            case sf::Event::KeyPressed:
+                if (event.key.code==sf::Keyboard::P)
+                {
+                    PauseJeu(fenetre, spriteTexte, &retourMenu, spriteCurseur);
+                }
+
+                break;
             case sf::Event::Closed:
                 fenetre->close();
                 break;
             case sf::Event::MouseMoved:
                 mousePos = sf::Mouse::getPosition(*fenetre);
+                //printf("x : %i || y : %i\n", mousePos.x, mousePos.y);
+                //600,600
                 break;
             case sf::Event::MouseButtonPressed:
                 ninja.setIsSlash(400);
@@ -827,11 +877,6 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
                         for (j=0; j<max; j++)
                             //Collisions slime 1 par 1
                         {
-                            //Collision entre i et j
-                            //if ((Collision(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20))==true && i!=j)
-                            //vague[i].changePas(0);
-                            //Colision haut, bas, droite, gauche
-                            //Pas haut, bas, droite, gauche
                             if (collision_droite(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20)==true && i!=j)
                             {
                                 pas_droite=0;
@@ -857,31 +902,67 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
                         pas_gauche=0;
                         pas_haut=0;
                     }
-                    if (ninja.getX()-vague[i].get_x()>0 && pas_droite!=0)
+                    if (ninja.getX()-vague[i].get_x()>0-vague[i].getZone() && pas_droite!=0)
                     {
                         vague[i].setPosition(vague[i].get_x()+1, vague[i].get_y());
                     }
-                    else if (ninja.getX()-vague[i].get_x()<0 && pas_gauche!=0)
+                    if (ninja.getX()-vague[i].get_x()<0+vague[i].getZone() && pas_gauche!=0)
                     {
                         vague[i].setPosition(vague[i].get_x()-1, vague[i].get_y());
                     }
-                    if (ninja.getY()-vague[i].get_y()>0 && pas_bas!=0)
+                    if (ninja.getY()-vague[i].get_y()>0-vague[i].getZone() && pas_bas!=0)
                     {
                         vague[i].setPosition(vague[i].get_x(), vague[i].get_y()+1);
                     }
-                    else if (ninja.getY()-vague[i].get_y()<0  && pas_haut!=0)
+                    if (ninja.getY()-vague[i].get_y()<0+vague[i].getZone()  && pas_haut!=0)
                     {
                         vague[i].setPosition(vague[i].get_x(), vague[i].get_y()-1);
                     }
-                    spriteSlime.setPosition(vague[i].get_x(), vague[i].get_y());
+                    if (vague[i].getType()==1)
+                        spriteMage.setPosition(vague[i].get_x(), vague[i].get_y());
+                    else
+                        spriteSlime.setPosition(vague[i].get_x(), vague[i].get_y());
+                }
+                float b = (float)rand()/(RAND_MAX);
+                if (nbboule<20 && b<0.01 && vague[i].getType()==1 && vague[i].isActif()==1)
+                {
+                    nbboule++;
+                    fireball[nbboule].set_posx(vague[i].get_x());
+                    fireball[nbboule].set_posy(vague[i].get_y());
+                    fireball[nbboule].set_directionx(fireball[nbboule].calculeDirectionx(ninja.getX(), ninja.getY()));
+                    fireball[nbboule].set_directiony(fireball[nbboule].calculeDirectiony(ninja.getX(), ninja.getY()));
+                    spriteFireball_mage.setPosition(fireball[nbboule].get_posx(), fireball[nbboule].get_posy());
                 }
             }
             if(vague[i].isActif()==1)
             {
-                fenetre->draw(spriteSlime);
+                if (vague[i].getType()==0)
+                    fenetre->draw(spriteSlime);
+                else
+                    fenetre->draw(spriteMage);
             }
         }
-        if (slime_etat==1)
+        if (nbboule!=-1)
+            {
+                for(i=0; i<nbboule; i++)
+                {
+                    fireball[i].set_posx(fireball[i].get_posx()+fireball[i].get_directionx()*5);
+                    fireball[i].set_posy(fireball[i].get_posy()+fireball[i].get_directiony()*5);
+                    spriteFireball_mage.setPosition(fireball[i].get_posx(), fireball[i].get_posy());
+                    if ((fireball[i].get_posx()>800 || fireball[i].get_posy()>600) || (fireball[i].get_posx()<0 || fireball[i].get_posy()<0))
+                    {
+                        fireball[i].~Fireball();
+                        nbboule--;
+                        for (j=i; j<nbboule+1; j++)
+                        {
+                            fireball[j]=fireball[j+1];
+                        }
+                    }
+                    fenetre->draw(spriteFireball_mage);
+                }
+
+            }
+        /*if (slime_etat==1)
             slime_etat=0;
         else if (slime_etat==0)
             slime_etat=1;
@@ -889,7 +970,7 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture)
         if(slimeStep<=0)
         {
             slimeStep=3;
-        }
+        }*/
         //code sylvain
 
         //fenetre->clear();

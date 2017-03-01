@@ -198,3 +198,65 @@
 	"functionEditor.hpp"
 	"funcWaves.hpp"
 
+1488384784 source:p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\functioneditor.cpp
+	"functionEditor.hpp"
+	"fireball.hpp"
+	"functionMenu.hpp"
+
+1488383994 p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\functioneditor.hpp
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<string.h>
+	<SFML/Graphics.hpp>
+	<fstream>
+	<iostream>
+	"functionPerso.hpp"
+	"funcWaves.hpp"
+
+1488326164 p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\functionperso.hpp
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<SFML/Graphics.hpp>
+	"funcWaves.hpp"
+
+1488368456 p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\funcwaves.hpp
+
+1488385297 source:p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\functionmenu.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+	"functionMenu.hpp"
+	"functionEditor.hpp"
+
+1488383927 p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\functionmenu.hpp
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	<stdio.h>
+	<stdlib.h>
+
+1488326164 source:p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\functionperso.cpp
+	"functionPerso.hpp"
+
+1488365139 source:p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\funcwaves.cpp
+	"funcWaves.hpp"
+
+1488384208 source:p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	<time.h>
+	"functionMenu.hpp"
+	"functionPerso.hpp"
+	"functionEditor.hpp"
+	"funcWaves.hpp"
+	"fireball.hpp"
+
+1488364537 source:p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\fireball.cpp
+	"fireball.hpp"
+	<math.h>
+
+1488364549 p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\fireball.hpp
+
