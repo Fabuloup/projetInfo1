@@ -679,6 +679,39 @@ int findLetter(char lettre)
     case '.':
         numLettre=26;
         break;
+    case ':':
+        numLettre=27;
+        break;
+    case '0':
+        numLettre=30;
+        break;
+    case '1':
+        numLettre=31;
+        break;
+    case '2':
+        numLettre=32;
+        break;
+    case '3':
+        numLettre=33;
+        break;
+    case '4':
+        numLettre=34;
+        break;
+    case '5':
+        numLettre=35;
+        break;
+    case '6':
+        numLettre=36;
+        break;
+    case '7':
+        numLettre=37;
+        break;
+    case '8':
+        numLettre=38;
+        break;
+    case '9':
+        numLettre=39;
+        break;
     default:
         numLettre=29;
         break;
@@ -710,6 +743,7 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
 
     int score = 0;
     char scoreTXT[100] = "Score : ";
+    int curseurScore=0;
 
 
     //code Sylvain
@@ -863,8 +897,14 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
         //code sylvain
         fenetre->clear();
         drawMapGame(planMap, 10, 10, spriteTexture,  fenetre, 0, 0);
-
-        //scoreTXT[2] = '0';
+        //on met à jour le score
+        /*for(curseurScore=10; curseurScore<100; curseurScore++)
+        {
+            scoreTXT[k]=(char)((int)score/1000);
+        }*/
+        scoreTXT[6]=(char)(score/1000)+48;
+        scoreTXT[7]=(char)(score/100)+48;
+        scoreTXT[7]=(char)(score/100)+48;
         MachineAEcrire(spriteTexte, fenetre, scoreTXT, 610, 100, 0.8);
         //Slimes 1 par 1
         for (i=0; i<max; i++)
