@@ -902,9 +902,11 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
         {
             scoreTXT[k]=(char)((int)score/1000);
         }*/
-        scoreTXT[6]=(char)(score/1000)+48;
-        scoreTXT[7]=(char)(score/100)+48;
-        scoreTXT[7]=(char)(score/100)+48;
+        scoreTXT[7]=(char)(score/1000)+48;
+        scoreTXT[8]=(char)((score-(score/1000)*1000)/100)+48;
+        scoreTXT[9]=(char)((score-(score/100)*100)/10)+48;
+        scoreTXT[10]=(char)(score-(score/10)*10)+48;
+
         MachineAEcrire(spriteTexte, fenetre, scoreTXT, 610, 100, 0.8);
         //Slimes 1 par 1
         for (i=0; i<max; i++)

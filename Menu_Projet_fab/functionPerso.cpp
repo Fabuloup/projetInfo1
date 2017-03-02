@@ -399,7 +399,14 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
                 {
                     if(vague[i].isActif() == 1)
                     {
-                        *score += 100;
+                        if(vague[i].getType()==0)
+                        {
+                            *score += 100;
+                        }
+                        else
+                        {
+                            *score += 55;
+                        }
                     }
                     vague[i].setActif(0);
                 }

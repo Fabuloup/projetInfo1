@@ -2,14 +2,14 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="functionMenu.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="functionEditor.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4370" topLine="81" />
+			<Cursor1 position="29328" topLine="895" />
 		</Cursor>
 	</File>
-	<File name="funcWaves.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2339" topLine="76" />
+			<Cursor1 position="237" topLine="26" />
 		</Cursor>
 	</File>
 	<File name="funcWaves.hpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -17,24 +17,14 @@
 			<Cursor1 position="84" topLine="0" />
 		</Cursor>
 	</File>
+	<File name="functionPerso.cpp" open="1" top="1" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="9499" topLine="393" />
+		</Cursor>
+	</File>
 	<File name="functionEditor.hpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="251" topLine="19" />
-		</Cursor>
-	</File>
-	<File name="functionPerso.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="9390" topLine="393" />
-		</Cursor>
-	</File>
-	<File name="functionPerso.hpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1054" topLine="27" />
-		</Cursor>
-	</File>
-	<File name="functionEditor.cpp" open="1" top="1" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="28332" topLine="856" />
 		</Cursor>
 	</File>
 	<File name="functionMenu.hpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -42,9 +32,19 @@
 			<Cursor1 position="1055" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="funcWaves.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="237" topLine="26" />
+			<Cursor1 position="2339" topLine="76" />
+		</Cursor>
+	</File>
+	<File name="functionMenu.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4370" topLine="36" />
+		</Cursor>
+	</File>
+	<File name="functionPerso.hpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1054" topLine="27" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
