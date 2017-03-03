@@ -271,3 +271,65 @@
 
 1488388534 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\fireball.hpp
 
+1488430046 source:p:\menu_projet_fab\fireball.cpp
+	"fireball.hpp"
+	<math.h>
+
+1488430046 p:\menu_projet_fab\fireball.hpp
+
+1488548411 source:p:\menu_projet_fab\functioneditor.cpp
+	"functionEditor.hpp"
+	"fireball.hpp"
+	"functionMenu.hpp"
+
+1488430046 p:\menu_projet_fab\functioneditor.hpp
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<string.h>
+	<SFML/Graphics.hpp>
+	<fstream>
+	<iostream>
+	"functionPerso.hpp"
+	"funcWaves.hpp"
+
+1488545417 p:\menu_projet_fab\functionperso.hpp
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<SFML/Graphics.hpp>
+	"funcWaves.hpp"
+
+1488430046 p:\menu_projet_fab\funcwaves.hpp
+
+1488430046 p:\menu_projet_fab\functionmenu.hpp
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	<stdio.h>
+	<stdlib.h>
+
+1488430046 source:p:\menu_projet_fab\functionmenu.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+	"functionMenu.hpp"
+	"functionEditor.hpp"
+
+1488545754 source:p:\menu_projet_fab\functionperso.cpp
+	"functionPerso.hpp"
+
+1488430046 source:p:\menu_projet_fab\funcwaves.cpp
+	"funcWaves.hpp"
+
+1488543538 source:p:\menu_projet_fab\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	<time.h>
+	"functionMenu.hpp"
+	"functionPerso.hpp"
+	"functionEditor.hpp"
+	"funcWaves.hpp"
+	"fireball.hpp"
+

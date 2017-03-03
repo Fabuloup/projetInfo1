@@ -348,7 +348,7 @@ int collisionNinjaMur(int ninjaX, int ninjaY, int* plan, int direction)
     return retour;
 }
 
-void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague, int* score)
+void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague, int* score, int* nbMorts)
 {
     int k=0;
         for(k=0; k<ninja->getSpeed(); k++)
@@ -401,12 +401,13 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
                     {
                         if(vague[i].getType()==0)
                         {
-                            *score += 100;
+                            *score += 10;
                         }
                         else
                         {
-                            *score += 55;
+                            *score += 4;
                         }
+                    (*nbMorts)++;
                     }
                     vague[i].setActif(0);
                 }

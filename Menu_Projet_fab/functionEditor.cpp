@@ -745,6 +745,7 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
     char scoreTXT[100] = "Score : ";
     int curseurScore=0;
 
+    char vagueTXT[100]="Vague : ";
 
     //code Sylvain
     //Gestion timer
@@ -754,7 +755,7 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
     Fireball fireball[20];
 
     ennemy vague[20];
-    int max=20, i,j, slime_etat=0, nb_nonActif, k, nbboule=-1, retourMenu=0;
+    int max=20, i,j, slime_etat=0, nb_nonActif, k, nbboule=-1, retourMenu=0, nbMorts=0, nbVagues=1, nbEnnemiSupp=0;
     sf::Sprite spriteSlime, spriteMage, spriteFireball_mage;
     sf::Texture textureSlime, textureSlime2, textureMage, textureFireball_mage;
     if (!textureFireball_mage.loadFromFile("fireball_mage.png"))
@@ -890,7 +891,7 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
                 break;
             }
         }
-        deplacementSouris(&ninja, mousePos.x, mousePos.y, planMap, vague, &score);
+        deplacementSouris(&ninja, mousePos.x, mousePos.y, planMap, vague, &score, &nbMorts);
         setTexureRectNinja(&spriteTexture, ninja.getWalkStep(), ninja.getSlashStep());
         spriteTexture.setPosition(ninja.getX()-20,ninja.getY()-20);
 
@@ -907,7 +908,30 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
         scoreTXT[9]=(char)((score-(score/100)*100)/10)+48;
         scoreTXT[10]=(char)(score-(score/10)*10)+48;
 
+        vagueTXT[7]=(char)(nbVagues/1000)+48;
+        vagueTXT[8]=(char)((nbVagues-(nbVagues/1000)*1000)/100)+48;
+        vagueTXT[9]=(char)((nbVagues-(nbVagues/100)*100)/10)+48;
+        vagueTXT[10]=(char)(nbVagues-(nbVagues/10)*10)+48;
+
+        if (nbMorts>=3+nbEnnemiSupp)
+        {
+            nbVagues++;
+            nbMorts=0;
+            nbEnnemiSupp=nbEnnemiSupp+3;
+        }
+
         MachineAEcrire(spriteTexte, fenetre, scoreTXT, 610, 100, 0.8);
+        MachineAEcrire(spriteTexte, fenetre, vagueTXT, 610, 200, 0.8);
+
+        if (nbVagues%5==0)
+        {
+            for (i=0;i<max;i++)
+            {
+                vague[i].setActif(0);
+                printf("coucou");
+            }
+        }
+
         //Slimes 1 par 1
         for (i=0; i<max; i++)
         {
@@ -997,7 +1021,7 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
                     fireball[i].set_posx(fireball[i].get_posx()+fireball[i].get_directionx()*5);
                     fireball[i].set_posy(fireball[i].get_posy()+fireball[i].get_directiony()*5);
                     spriteFireball_mage.setPosition(fireball[i].get_posx(), fireball[i].get_posy());
-                    if ((fireball[i].get_posx()>800 || fireball[i].get_posy()>600) || (fireball[i].get_posx()<0 || fireball[i].get_posy()<0))
+                    if ((fireball[i].get_posx()>600 || fireball[i].get_posy()>600) || (fireball[i].get_posx()<0 || fireball[i].get_posy()<0))
                     {
                         fireball[i].~Fireball();
                         nbboule--;

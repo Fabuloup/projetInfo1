@@ -41,7 +41,7 @@ private:
     int h_isSlash;
 };
 
-void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague, int* score);
+void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague, int* score, int* nbMorts);
 void setTexureRectNinja(sf::Sprite* spriteGeneral, int ninjaWalkStep, int slash);
 
 #endif // FUNCTIONPERSO_HPP_INCLUDED

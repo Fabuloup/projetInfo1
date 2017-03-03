@@ -63,7 +63,7 @@ int main()
     musiqueFond.setVolume(100);
     sonOn=1;
 
-    //Bordel de Fabien
+    //Chargement texture et sprite pour la fonction 'MachineAEcrire'
     sf::Texture textTexture;
     if( !textTexture.loadFromFile("ressources/alphabetred.png"))
     {
