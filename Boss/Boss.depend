@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1487343313 source:p:\projetinfo1-master\boss\main.cpp
+1488363202 source:p:\projetinfo1-master\boss\main.cpp
 	<stdio.h>
 	<stdlib.h>
 	<SFML/Graphics.hpp>
@@ -9,14 +9,41 @@
 	"boss.hpp"
 	"fireball.hpp"
 
-1487074218 p:\projetinfo1-master\boss\boss.hpp
+1488363061 p:\projetinfo1-master\boss\boss.hpp
+	<SFML/Graphics.hpp>
+	"fireball.hpp"
 
-1487074198 source:p:\projetinfo1-master\boss\boss.cpp
+1488363196 source:p:\projetinfo1-master\boss\boss.cpp
 	"boss.hpp"
+	<stdlib.h>
+	"fireball.hpp"
+	<SFML/Graphics.hpp>
+	<math.h>
 
-1487161181 source:p:\projetinfo1-master\boss\fireball.cpp
+1488260146 source:p:\projetinfo1-master\boss\fireball.cpp
 	"fireball.hpp"
 	<math.h>
 
-1487161062 p:\projetinfo1-master\boss\fireball.hpp
+1488260146 p:\projetinfo1-master\boss\fireball.hpp
+
+1488260146 source:d:\users\sylvain\desktop\projetinfo1-master\boss\boss.cpp
+	"boss.hpp"
+
+1488260146 d:\users\sylvain\desktop\projetinfo1-master\boss\boss.hpp
+
+1488260146 source:d:\users\sylvain\desktop\projetinfo1-master\boss\fireball.cpp
+	"fireball.hpp"
+	<math.h>
+
+1488260146 d:\users\sylvain\desktop\projetinfo1-master\boss\fireball.hpp
+
+1488310701 source:d:\users\sylvain\desktop\projetinfo1-master\boss\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+	<math.h>
+	<time.h>
+	<iostream>
+	"boss.hpp"
+	"fireball.hpp"
 

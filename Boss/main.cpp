@@ -11,8 +11,8 @@
 int main()
 {
     srand(time(NULL));
-    int x=0, y=0, rayon=100, originx=385, originy=275, vener=0, skin=0, etat=0, nbboule=-1,i, j;
-    float angle=0, attaque, feu, fireball, dirx, diry;
+    int rayon=100, originx=385, originy=275, skin=0, etat=0, nbboule=-1,i, j;
+    float angle=0, attaqueTeleportation, attaqueInvincible, attaqueFireball, dirx, diry;
     sf::RenderWindow fenetre(sf::VideoMode(800,600),"Boss");
     sf::Sprite spriteBoss, spriteFireball;
     sf::Time temps, tempstp;
@@ -27,13 +27,13 @@ int main()
     if(!textureFireball.loadFromFile("fireball.png"))
         printf("Erreur !");
 
-    Boss Michel;
-    Fireball skill[20];
+    Boss skullBoss;
+    Fireball tabFireball[20];
 
     spriteBoss.setTexture(textureBoss);
     spriteFireball.setTexture(textureFireball);
     spriteBoss.setTextureRect(sf::IntRect(0,0,30,30));
-    spriteBoss.setPosition(Michel.get_posx(),Michel.get_posy());
+    spriteBoss.setPosition(skullBoss.get_posx(),skullBoss.get_posy());
     spriteBoss.setScale(sf::Vector2f(2.0f,2.0f));
     fenetre.clear(sf::Color::Black);
     fenetre.draw(spriteBoss);
@@ -53,68 +53,65 @@ int main()
         {
             spriteBoss.setTextureRect(sf::IntRect(60,0,30,30));
         }
-        attaque=(float)rand()/(float)(RAND_MAX);
-        feu=(float)rand()/(float)(RAND_MAX);
-        fireball=(float)rand()/(float)(RAND_MAX);
-        printf("%f\n%f",attaque,feu);
+        /*attaqueTeleportation=(float)rand()/(float)(RAND_MAX);
+        attaqueInvincible=(float)rand()/(float)(RAND_MAX);
+        attaqueFireball=(float)rand()/(float)(RAND_MAX);
         if (angle>6.3)
             angle=0.03;
-        if (fireball<=0.05 && nbboule<20)
+        if (attaqueFireball<=0.05 && nbboule<20)
         {
             nbboule++;
-            skill[nbboule].set_posx(Michel.get_posx());
-            skill[nbboule].set_posy(Michel.get_posy());
-            spriteFireball.setPosition(skill[nbboule].get_posx(),skill[nbboule].get_posy());
+            tabFireball[nbboule].set_posx(skullBoss.get_posx());
+            tabFireball[nbboule].set_posy(skullBoss.get_posy());
+            spriteFireball.setPosition(tabFireball[nbboule].get_posx(),tabFireball[nbboule].get_posy());
             dirx=rand()%800;
             diry=rand()%600;
-            skill[nbboule].set_directionx(skill[nbboule].calculeDirectionx(dirx, diry));
-            skill[nbboule].set_directiony(skill[nbboule].calculeDirectiony(dirx,diry));
+            tabFireball[nbboule].set_directionx(tabFireball[nbboule].calculeDirectionx(dirx, diry));
+            tabFireball[nbboule].set_directiony(tabFireball[nbboule].calculeDirectiony(dirx,diry));
         }
-        /*if (nbboule!=-1)
-        {
-            for (i=0; i<nbboule; i++)
-            {
-                skill[i].set_posx(skill[i].get_posx()+skill[i].get_directionx()*5);
-                skill[i].set_posy(skill[i].get_posy()+skill[i].get_directiony()*5);
-            }
-        }*/
-        if (attaque>=0.99 && clocktp.getElapsedTime()>tempstp)
+        if (attaqueTeleportation>=0.99 && clocktp.getElapsedTime()>tempstp)
         {
             angle=angle+3;
             clocktp.restart();
         }
-        if (feu>=0.55 && feu<=0.56 && clock.getElapsedTime()>temps)
+        if (attaqueInvincible>=0.55 && attaqueInvincible<=0.56 && clock.getElapsedTime()>temps)
         {
             spriteBoss.setTexture(textureBoss2);
-            Michel.setInvincible(true);
+            skullBoss.setInvincible(true);
             clock.restart();
         }
         if (clock.getElapsedTime()>temps)
         {
             spriteBoss.setTexture(textureBoss);
-            Michel.setInvincible(false);
+            skullBoss.setInvincible(false);
         }
 
         angle=angle+0.03;
-        Michel.set_posx(originx+cos(angle)*rayon);
-        Michel.set_posy(originy+sin(angle)*rayon);
-        spriteBoss.setPosition(Michel.get_posx(),Michel.get_posy());
+        skullBoss.set_posx(originx+cos(angle)*rayon);
+        skullBoss.set_posy(originy+sin(angle)*rayon);*/
+        vagueBoss(&skullBoss, &angle, &nbboule, tabFireball, &clocktp, tempstp, &clock, temps,  originx,  originy,  rayon);
+        spriteFireball.setPosition(tabFireball[nbboule].get_posx(),tabFireball[nbboule].get_posy());
+        if (skullBoss.estInvincible()==true)
+            spriteBoss.setTexture(textureBoss2);
+        else
+            spriteBoss.setTexture(textureBoss);
+        spriteBoss.setPosition(skullBoss.get_posx(),skullBoss.get_posy());
         fenetre.clear(sf::Color::Black);
         fenetre.draw(spriteBoss);
         if (nbboule!=-1)
         {
             for (i=0; i<nbboule; i++)
             {
-                skill[i].set_posx(skill[i].get_posx()+skill[i].get_directionx()*5);
-                skill[i].set_posy(skill[i].get_posy()+skill[i].get_directiony()*5);
-                spriteFireball.setPosition(skill[i].get_posx(), skill[i].get_posy());
-                if ((skill[i].get_posx()>800 || skill[i].get_posy()>600) || (skill[i].get_posx()<0 || skill[i].get_posy()<0))
+                tabFireball[i].set_posx(tabFireball[i].get_posx()+tabFireball[i].get_directionx()*5);
+                tabFireball[i].set_posy(tabFireball[i].get_posy()+tabFireball[i].get_directiony()*5);
+                spriteFireball.setPosition(tabFireball[i].get_posx(), tabFireball[i].get_posy());
+                if ((tabFireball[i].get_posx()>800 || tabFireball[i].get_posy()>600) || (tabFireball[i].get_posx()<0 || tabFireball[i].get_posy()<0))
                 {
-                    skill[i].~Fireball();
+                    tabFireball[i].~Fireball();
                     nbboule--;
                     for (j=i; j<nbboule+1; j++)
                     {
-                        skill[j]=skill[j+1];
+                        tabFireball[j]=tabFireball[j+1];
                     }
                 }
                 fenetre.draw(spriteFireball);
