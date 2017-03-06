@@ -12,6 +12,7 @@
 
 #include "functionPerso.hpp"
 #include "funcWaves.hpp"
+#include "boss.hpp"
 
 #define ZOOM 0.3
 #define LARGEUR 800

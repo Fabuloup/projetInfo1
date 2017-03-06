@@ -752,10 +752,32 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
     sf::Clock clock;
     sf::Time temps=sf::seconds(4.0);
     //Tableau de boules de feu
+
+    //variables boss
+    srand(time(NULL));
+    int rayon=100, originx=385, originy=275, skin=0, etat=0, nbboule=-1,i, j;
+    float angle=0, attaqueTeleportation, attaqueInvincible, attaqueFireball, dirx, diry;
+    sf::Sprite spriteBoss, spriteFireball;
+    sf::Time tempstp;
+    tempstp=sf::seconds(7.0);
+    sf::Clock clocktp;
+    sf::Texture textureBoss, textureBoss2, textureFireball;
+    if (!textureBoss.loadFromFile("skullHeadbang.png"))
+        printf("Erreur !");
+    if (!textureBoss2.loadFromFile("skullHeadbang2.png"))
+        printf("Erreur !");
+    Boss skullBoss;
+
+    spriteBoss.setTexture(textureBoss);
+    spriteBoss.setTextureRect(sf::IntRect(0,0,30,30));
+    spriteBoss.setPosition(skullBoss.get_posx(),skullBoss.get_posy());
+    spriteBoss.setScale(sf::Vector2f(2.0f,2.0f));
+    //fin variables boss
+
     Fireball fireball[20];
 
     ennemy vague[20];
-    int max=20, i,j, slime_etat=0, nb_nonActif, k, nbboule=-1, retourMenu=0, nbMorts=0, nbVagues=1, nbEnnemiSupp=0;
+    int max=20, slime_etat=0, nb_nonActif, k, retourMenu=0, nbMorts=0, nbVagues=1, nbEnnemiSupp=0;
     sf::Sprite spriteSlime, spriteMage, spriteFireball_mage;
     sf::Texture textureSlime, textureSlime2, textureMage, textureFireball_mage;
     if (!textureFireball_mage.loadFromFile("fireball_mage.png"))
@@ -879,11 +901,11 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
             case sf::Event::Closed:
                 fenetre->close();
                 break;
-            case sf::Event::MouseMoved:
+            /*case sf::Event::MouseMoved:
                 mousePos = sf::Mouse::getPosition(*fenetre);
                 //printf("x : %i || y : %i\n", mousePos.x, mousePos.y);
                 //600,600
-                break;
+                break;*/
             case sf::Event::MouseButtonPressed:
                 ninja.setIsSlash(400);
                 break;
@@ -891,9 +913,43 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
                 break;
             }
         }
+        mousePos = sf::Mouse::getPosition(*fenetre);
         deplacementSouris(&ninja, mousePos.x, mousePos.y, planMap, vague, &score, &nbMorts);
         setTexureRectNinja(&spriteTexture, ninja.getWalkStep(), ninja.getSlashStep());
         spriteTexture.setPosition(ninja.getX()-20,ninja.getY()-20);
+
+        //gestion boss
+        if (etat==0)
+        {
+            spriteBoss.setTextureRect(sf::IntRect(0,0,30,30));
+        }
+        else if (etat==1)
+        {
+            spriteBoss.setTextureRect(sf::IntRect(30,0,30,30));
+        }
+        else if (etat==2)
+        {
+            spriteBoss.setTextureRect(sf::IntRect(60,0,30,30));
+        }
+
+
+        if (etat==0 && skin==5)
+        {
+            etat=1;
+            skin=0;
+        }
+        else if (etat==1 && skin==5)
+        {
+            etat=2;
+            skin=0;
+        }
+        else if (etat==2 && skin==5)
+        {
+            etat=0;
+            skin=0;
+        }
+        skin++;
+        //fin gestion boss
 
         //code sylvain
         fenetre->clear();
@@ -923,14 +979,22 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
         MachineAEcrire(spriteTexte, fenetre, scoreTXT, 610, 100, 0.8);
         MachineAEcrire(spriteTexte, fenetre, vagueTXT, 610, 200, 0.8);
 
-        if (nbVagues%5==0)
+        /*if (nbVagues%5==0)
         {
-            for (i=0;i<max;i++)
+            for (i=0; i<max; i++)
             {
                 vague[i].setActif(0);
-                printf("coucou");
+                //printf("coucou");
+
             }
-        }
+            vagueBoss(&skullBoss, &angle, &nbboule, fireball, &clocktp, tempstp, &clock, temps,  originx,  originy,  rayon);
+            if (skullBoss.estInvincible()==true)
+                spriteBoss.setTexture(textureBoss2);
+            else
+                spriteBoss.setTexture(textureBoss);
+            spriteBoss.setPosition(skullBoss.get_posx(),skullBoss.get_posy());
+            fenetre->draw(spriteBoss);
+        }*/
 
         //Slimes 1 par 1
         for (i=0; i<max; i++)
@@ -1015,25 +1079,25 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
             }
         }
         if (nbboule!=-1)
+        {
+            for(i=0; i<nbboule; i++)
             {
-                for(i=0; i<nbboule; i++)
+                fireball[i].set_posx(fireball[i].get_posx()+fireball[i].get_directionx()*5);
+                fireball[i].set_posy(fireball[i].get_posy()+fireball[i].get_directiony()*5);
+                spriteFireball_mage.setPosition(fireball[i].get_posx(), fireball[i].get_posy());
+                if ((fireball[i].get_posx()>600 || fireball[i].get_posy()>600) || (fireball[i].get_posx()<0 || fireball[i].get_posy()<0))
                 {
-                    fireball[i].set_posx(fireball[i].get_posx()+fireball[i].get_directionx()*5);
-                    fireball[i].set_posy(fireball[i].get_posy()+fireball[i].get_directiony()*5);
-                    spriteFireball_mage.setPosition(fireball[i].get_posx(), fireball[i].get_posy());
-                    if ((fireball[i].get_posx()>600 || fireball[i].get_posy()>600) || (fireball[i].get_posx()<0 || fireball[i].get_posy()<0))
+                    fireball[i].~Fireball();
+                    nbboule--;
+                    for (j=i; j<nbboule+1; j++)
                     {
-                        fireball[i].~Fireball();
-                        nbboule--;
-                        for (j=i; j<nbboule+1; j++)
-                        {
-                            fireball[j]=fireball[j+1];
-                        }
+                        fireball[j]=fireball[j+1];
                     }
-                    fenetre->draw(spriteFireball_mage);
                 }
-
+                fenetre->draw(spriteFireball_mage);
             }
+
+        }
         /*if (slime_etat==1)
             slime_etat=0;
         else if (slime_etat==0)
