@@ -395,8 +395,10 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
             int i=0;
             for(i=0; i<MAXENNEMY; i++)
             {
-                if(vague[i].get_x() > ninja->getX()-10 && vague[i].get_x() < ninja->getX()+10 && vague[i].get_y() > ninja->getY()-20 && vague[i].get_y() < ninja->getY()+20 && ninja->getSlashStep()>200)
+                if(vague[i].get_x() > ninja->getX()-10 && vague[i].get_x() < ninja->getX()+10 && vague[i].get_y() > ninja->getY()-20 && vague[i].get_y() < ninja->getY()+20)
                 {
+                    if(ninja->getSlashStep()>200)
+                        {
                     if(vague[i].isActif() == 1)
                     {
                         if(vague[i].getType()==0)
@@ -410,6 +412,11 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
                     (*nbMorts)++;
                     }
                     vague[i].setActif(0);
+                        }
+                        else
+                        {
+                            ninja->setLife(0);
+                        }
                 }
             }
             //fini
