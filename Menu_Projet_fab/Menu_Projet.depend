@@ -277,18 +277,18 @@
 
 1488388534 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\fireball.hpp
 
-1488430046 source:p:\menu_projet_fab\fireball.cpp
+1488980820 source:p:\menu_projet_fab\fireball.cpp
 	"fireball.hpp"
 	<math.h>
 
-1488430046 p:\menu_projet_fab\fireball.hpp
+1488878082 p:\menu_projet_fab\fireball.hpp
 
-1488548411 source:p:\menu_projet_fab\functioneditor.cpp
+1488983863 source:p:\menu_projet_fab\functioneditor.cpp
 	"functionEditor.hpp"
 	"fireball.hpp"
 	"functionMenu.hpp"
 
-1488430046 p:\menu_projet_fab\functioneditor.hpp
+1488960796 p:\menu_projet_fab\functioneditor.hpp
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -296,38 +296,42 @@
 	<SFML/Graphics.hpp>
 	<fstream>
 	<iostream>
+	<SFML/Audio.hpp>
 	"functionPerso.hpp"
 	"funcWaves.hpp"
+	"boss.hpp"
 
-1488545417 p:\menu_projet_fab\functionperso.hpp
+1488960163 p:\menu_projet_fab\functionperso.hpp
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
 	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
 	"funcWaves.hpp"
+	"fireball.hpp"
 
-1488430046 p:\menu_projet_fab\funcwaves.hpp
+1488878082 p:\menu_projet_fab\funcwaves.hpp
 
-1488430046 p:\menu_projet_fab\functionmenu.hpp
+1488957859 p:\menu_projet_fab\functionmenu.hpp
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 	<stdio.h>
 	<stdlib.h>
 
-1488430046 source:p:\menu_projet_fab\functionmenu.cpp
+1488978221 source:p:\menu_projet_fab\functionmenu.cpp
 	<stdio.h>
 	<stdlib.h>
 	<SFML/Graphics.hpp>
 	"functionMenu.hpp"
 	"functionEditor.hpp"
 
-1488545754 source:p:\menu_projet_fab\functionperso.cpp
+1488980678 source:p:\menu_projet_fab\functionperso.cpp
 	"functionPerso.hpp"
 
-1488430046 source:p:\menu_projet_fab\funcwaves.cpp
+1488980215 source:p:\menu_projet_fab\funcwaves.cpp
 	"funcWaves.hpp"
 
-1488543538 source:p:\menu_projet_fab\main.cpp
+1488978210 source:p:\menu_projet_fab\main.cpp
 	<stdio.h>
 	<stdlib.h>
 	<SFML/Graphics.hpp>
@@ -353,6 +357,17 @@
 	<math.h>
 
 1488807669 p:\projet 1ere anne\projetinfo1-master\projetinfo1-master\menu_projet_fab\boss.hpp
+	<SFML/Graphics.hpp>
+	"fireball.hpp"
+
+1488981110 source:p:\menu_projet_fab\boss.cpp
+	"boss.hpp"
+	<stdlib.h>
+	"fireball.hpp"
+	<SFML/Graphics.hpp>
+	<math.h>
+
+1488878082 p:\menu_projet_fab\boss.hpp
 	<SFML/Graphics.hpp>
 	"fireball.hpp"
 

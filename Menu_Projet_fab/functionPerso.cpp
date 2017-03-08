@@ -1,5 +1,6 @@
 #include "functionPerso.hpp"
 
+//Classe héros
 heros::heros() : h_x(0), h_y(0), h_speed(0), h_life(0), h_angle(0), h_walkStep(0), h_isSlash(0)
 {
 
@@ -167,6 +168,7 @@ void heros::walkY(int m_y)
 
 void setTexureRectNinja(sf::Sprite* spriteGeneral, int ninjaWalkStep, int slash)
 {
+    //On change la texture du ninja selon si il dash et sa direction
     if(slash<200)
     {
         switch(ninjaWalkStep)
@@ -275,6 +277,7 @@ void writeDebugMap(int ninjaX, int ninjaY, int*plan)
 
 int collisionNinjaMur(int ninjaX, int ninjaY, int* plan, int direction)
 {
+    //On test les collisions tout autour du ninja
     int tailleCase = 60;
     int nbCase = 10;
     int caseUP=plan[((ninjaX/tailleCase))+(((ninjaY-1)/tailleCase)*nbCase)];
@@ -348,48 +351,46 @@ int collisionNinjaMur(int ninjaX, int ninjaY, int* plan, int direction)
     return retour;
 }
 
-void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague, int* score, int* nbMorts)
+void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague, int* score, int* nbMorts, Fireball* tabFireball, int nbboule)
 {
+    sf::SoundBuffer bufferMortSlime, bufferMortMage, bufferPasNinja;
+    sf::Sound sonMortSlime, sonMortMage, sonPasNinja;
+    if (!bufferMortSlime.loadFromFile("son/mortslime.wav"))
+        printf("Erreur de chargement du son de mort slime");
+    sonMortSlime.setBuffer(bufferMortSlime);
+    sonMortSlime.setVolume(100);
+    if (!bufferMortMage.loadFromFile("son/mortmage.wav"))
+        printf("Erreur de chargement du son de mort mage");
+    sonMortMage.setBuffer(bufferMortMage);
+    sonMortMage.setVolume(100);
+    if (!bufferPasNinja.loadFromFile("son/chaussure.wav"))
+        printf("Erreur de chargement du son de pas");
+    sonPasNinja.setBuffer(bufferPasNinja);
+    sonPasNinja.setVolume(100);
+
     int k=0;
         for(k=0; k<ninja->getSpeed(); k++)
         {
+            //on récupere la distance entre le ninja et la souris pour savoir si il bouge (distance supérieur à 5)
             int distanceY=abs(mouseY-ninja->getY());
             int distanceX=abs(mouseX-ninja->getX());
 
             if(ninja->getSlashStep() > 200)
             {
+                //quand il dash on remplace les distances par les valeurs de l'angle pour ensuite l'orienter
                 distanceY = -sin(ninja->getAngle())*100;
                 distanceX = -cos(ninja->getAngle())*100;
-                if(distanceX < 0)
-                {
-                    distanceX-=10;
-                }
-                else
-                {
-                    distanceX += 10;
-                }
-                if(distanceY < 0)
-                {
-                    distanceY -= 10;
-                }
-                else
-                {
-                    distanceY += 10;
-                }
                 printf("%i\n",distanceX);
                 mouseX = ninja->getX()+distanceX;
                 mouseY = ninja->getY()+distanceY;
-                //printf("%f\n", ninja->getAngle());
-                //printf("%i\n", distanceY);
             }
             else
             {
+                //Quand le ninja ne dash pas on actualise l'orientation
                 ninja->findAngle(mouseX, mouseY);
             }
 
-            //printf("Slash step : %i\n", ninja->getSlashStep());
-
-            //on test la décédence
+            //on test la mort des ennemis
             //on test la position des ennemis pour savoir si on les à touchés
             //si oui, on les considère comme mort
             int i=0;
@@ -397,6 +398,8 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
             {
                 if(vague[i].get_x() > ninja->getX()-10 && vague[i].get_x() < ninja->getX()+10 && vague[i].get_y() > ninja->getY()-20 && vague[i].get_y() < ninja->getY()+20)
                 {
+                    //si le ninja est sur un slime et qu'il dash le slime meurt
+                    //sinon le ninja meurt
                     if(ninja->getSlashStep()>200)
                         {
                     if(vague[i].isActif() == 1)
@@ -404,10 +407,12 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
                         if(vague[i].getType()==0)
                         {
                             *score += 10;
+                            sonMortSlime.play();
                         }
                         else
                         {
                             *score += 4;
+                            sonMortMage.play();
                         }
                     (*nbMorts)++;
                     }
@@ -419,7 +424,19 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
                         }
                 }
             }
+            for (i=0;i<nbboule;i++)
+            {
+                //le même test que les slime mais avec les boules de feu
+                if (tabFireball[i].get_posx() > ninja->getX()-10 && tabFireball[i].get_posx() < ninja->getX()+10 && tabFireball[i].get_posy() > ninja->getY()-20 && tabFireball[i].get_posy() < ninja->getY()+20)
+                {
+                    if (ninja->getSlashStep()<200)
+                    {
+                        ninja->setLife(0);
+                    }
+                }
+            }
             //fini
+            //on déplace le ninja pixel par pixel en testant les collisions avec les murs
             if(distanceY > distanceX && (abs(distanceX)>5 || abs(distanceY)>5))
             {
                 if(mouseY>ninja->getY() && collisionNinjaMur(ninja->getX(), ninja->getY(), plan, 1)==0)
@@ -478,5 +495,6 @@ void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* 
                 }
             }
         }
+        sonPasNinja.play();
 }
 

@@ -42,8 +42,15 @@ void OptionsMenu(sf::RenderWindow *fenetre, sf::Sprite spriteFond, sf::Sprite sp
 void PauseJeu(sf::RenderWindow *fenetre, sf::Sprite spriteTexte, int *retourMenu, sf::Sprite spriteCurseur)
 {
     sf::Event event;
+    sf::Sprite spriteFond;
+    sf::Texture textureFond;
+    if (!textureFond.loadFromFile("ressources/fond_pause.png"))
+        printf("Erreur de chargement");
+    spriteFond.setTexture(textureFond);
+    spriteFond.scale(5.0,5.0);
+    spriteFond.setPosition(150,50);
     int quitterPause=0, choix=1, xcurseur=205, ycurseur=255;
-    char pauseTitre[]="Jeu en pause";
+    char pauseTitre[]="Pause";
     char pauseReprendre[]="Reprendre";
     char pauseQuitter[]="Quitter";
     spriteCurseur.setPosition(205,255);
@@ -52,7 +59,8 @@ void PauseJeu(sf::RenderWindow *fenetre, sf::Sprite spriteTexte, int *retourMenu
         while (fenetre->isOpen() && quitterPause==0)
         {
             fenetre->clear(sf::Color::Black);
-            MachineAEcrire(spriteTexte, fenetre, pauseTitre, 160,100,2.0);
+            fenetre->draw(spriteFond);
+            MachineAEcrire(spriteTexte, fenetre, pauseTitre, 310,120,2.0);
             MachineAEcrire(spriteTexte, fenetre, pauseReprendre, 270,250,1.5);
             MachineAEcrire(spriteTexte, fenetre, pauseQuitter, 300, 400, 1.5);
             while (fenetre->pollEvent(event))
@@ -123,3 +131,24 @@ void PauseJeu(sf::RenderWindow *fenetre, sf::Sprite spriteTexte, int *retourMenu
         }
     }
 }
+
+void EcranDefaite(sf::RenderWindow *fenetre, char *scoreTXT, char *vagueTXT, sf::Sprite spriteTexte)
+{
+    sf::Event event;
+    char pauseTitre[]="Defaite";
+    char pauseQuitter[]="Appuyez sur Entree pour quitter";
+    int quitterDefaite=0;
+    MachineAEcrire(spriteTexte, fenetre, pauseTitre, 150,100,2.0);
+    MachineAEcrire(spriteTexte, fenetre, pauseQuitter, 10, 400,1);
+    MachineAEcrire(spriteTexte, fenetre, scoreTXT, 120,200,1.5);
+    MachineAEcrire(spriteTexte, fenetre, vagueTXT, 120, 300, 1.5);
+    fenetre->display();
+    while(quitterDefaite==0)
+    {
+        if (fenetre->pollEvent(event) && (event.type==sf::Event::KeyPressed && event.key.code==sf::Keyboard::Return))
+        {
+            quitterDefaite=1;
+        }
+    }
+}
+

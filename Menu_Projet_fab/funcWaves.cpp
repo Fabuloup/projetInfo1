@@ -1,5 +1,6 @@
 #include "funcWaves.hpp"
 
+//Création d'une classe ennemi
 ennemy::ennemy() : e_vie(0), e_x(0), e_y(0), e_type(0), e_actif(0)
 {
 
@@ -56,6 +57,7 @@ int ennemy::isActif()
     return e_actif;
 }
 
+//Fonction pour les collisions
 bool collision_haut (int posx_p, int posy_p, int posx_ia, int posy_ia, int largeur_p, int hauteur_p, int largeur_ia, int hauteur_ia)
 {
     //Test si p est bloqué vers le haut par ia

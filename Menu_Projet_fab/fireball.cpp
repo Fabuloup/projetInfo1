@@ -1,6 +1,7 @@
 #include "fireball.hpp"
 #include <math.h>
 
+//Classe boule de feu des mages
 Fireball::Fireball() : m_posx(0), m_posy(0), m_pas(0)
 {
 
@@ -8,7 +9,7 @@ Fireball::Fireball() : m_posx(0), m_posy(0), m_pas(0)
 
 Fireball::~Fireball()
 {
-
+    //Destructeur
 }
 
 int Fireball::get_posx()
@@ -43,6 +44,8 @@ void Fireball::set_posy(int new_y)
 
 double Fireball::calculeDirectionx(int cible_x, int cible_y)
 {
+    //Calcule la direction en x de la boule de feu
+    //On fait l'arctangente de la distance entre la boule de feu et la cible
     double angle=atan2(cible_y-m_posy, cible_x-m_posx);
     return cos(angle);
 }

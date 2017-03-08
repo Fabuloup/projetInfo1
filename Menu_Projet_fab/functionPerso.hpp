@@ -5,8 +5,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include "funcWaves.hpp"
+#include "fireball.hpp"
 
 class heros
 {
@@ -41,7 +43,7 @@ private:
     int h_isSlash;
 };
 
-void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague, int* score, int* nbMorts);
+void deplacementSouris(heros* ninja, int mouseX, int mouseY, int* plan, ennemy* vague, int* score, int* nbMorts, Fireball* tabFireball, int nbboule);
 void setTexureRectNinja(sf::Sprite* spriteGeneral, int ninjaWalkStep, int slash);
 
 #endif // FUNCTIONPERSO_HPP_INCLUDED

@@ -12,7 +12,7 @@ void funcEditor(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fene
     fenetre->setView(vue);
     int choixEdit =0;
     char NomMap[100]="";
-    //choix de l'utilisateur (voir fonction)
+    //récupère le choix de l'utilisateur (voir fonction)
     choixEdit = createOrNew(fenetre, tileset, tileTexte);
     if(choixEdit==1)
     {
@@ -126,8 +126,8 @@ void loadMap(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre
             int k=0;
             for(k=0; k<100; k++)
             {
+                //On stock chaque tuile (case) de la map dans le tableau carte
                 carte[k]=(int)(fgetc(fichierMap)-48);
-                printf("%i\n", carte[k]);
             }
             fclose(fichierMap);
             exitVar=1;
@@ -141,7 +141,7 @@ void scanGraphique(char *texte,sf::Sprite tileText, sf::RenderWindow *fenetre, i
     int toContinue = 0; // pour sortir de la boucle lorsque l'utilisateur aura fini d'ecrire son mot
     char *lettreTapee; //le caractère tapé par l'utilisateur
     sf::Event event;
-
+    //On récupère l'entrée utilisateur et on la convertit en string
     while(fenetre->isOpen() && toContinue==0)
     {
         while(fenetre->pollEvent(event))
@@ -251,6 +251,7 @@ void scanGraphique(char *texte,sf::Sprite tileText, sf::RenderWindow *fenetre, i
                     break;
                 }
                 fenetre->clear();
+                //On affiche ce que l'utilisateur a tapé
                 strcat(texte, lettreTapee);
                 MachineAEcrire(tileText, fenetre, texte, posX, posY, taille);
                 fenetre->display();
@@ -261,9 +262,10 @@ void scanGraphique(char *texte,sf::Sprite tileText, sf::RenderWindow *fenetre, i
         }
     }
 }
-//fonction pour tester si la souris est sur un bouton
 bool isClickOn(int xToTest, int yToTest, int x, int y, int width, int height)
 {
+    //fonction pour tester si la souris est sur un bouton ou sur une tuile de la map
+
     //le zoom est de 0.15
     x=x/ZOOM;
     y=y/ZOOM;
@@ -281,9 +283,10 @@ bool isClickOn(int xToTest, int yToTest, int x, int y, int width, int height)
 
 void drawMap(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::RenderWindow *fenetre, int decalageX, int decalageY)
 {
+    //Dessine la map dans l'éditeur avec le zoom
     int x=0;
     int y=0;
-    //tileset.scale(3.0f, 3.0f);
+    //On parcourt le tableau de la carte et selon le numéro de tuile on dessine une certaine texture
     for(y=0; y<hauteur; y++)
     {
         for(x=0; x<largeur; x++)
@@ -356,6 +359,7 @@ void drawMap(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::Render
 
 void drawMapGame(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::RenderWindow *fenetre, int decalageX, int decalageY)
 {
+    //Dessine la map en jeu, sans le zoom
     int x=0;
     int y=0;
     tileset.scale(3.0f, 3.0f);
@@ -429,9 +433,10 @@ void drawMapGame(int *plan, int largeur, int hauteur, sf::Sprite tileset, sf::Re
     }
 }
 
-//on lui passe en parametres la map et la position de la souris et il peint la map
 void changeMapValue(int *plan, int largeurMap, int hauteurMap, int x, int y, int tileSelected, int decalageX, int decalageY)
 {
+    //on lui passe en parametres la map et la position de la souris et il peint la map
+    //Pour modifier la map dans l'éditeur
     int k=0;
     int j=0;
     for(k=0; k<hauteurMap; k++)
@@ -446,9 +451,9 @@ void changeMapValue(int *plan, int largeurMap, int hauteurMap, int x, int y, int
     }
 }
 
-//l'editeur
 void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapName)
 {
+    //l'editeur
     int tileSelected=0;
     //coordonnées des boutons
     //le troisième correspond à l'image du sprite
@@ -473,6 +478,7 @@ void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapN
                 {
                     isOpen=0;
                     char filePath[100];
+                    //on ecrit dans un fichier les valeurs des tuiles
                     strcpy(filePath, "ressources\\map\\");
                     strcat(filePath, mapName);
                     ofstream fichier(filePath, ios::out | ios::trunc);
@@ -500,14 +506,17 @@ void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapN
                 {
                     if(isClickOn(event.mouseButton.x, event.mouseButton.y, boutonCoord[0][0], boutonCoord[0][1], DIMENSION, DIMENSION) && tileSelected>0)
                     {
+                        //choix de la tuile
                         tileSelected-=1;
                     }
                     else if (isClickOn(event.mouseButton.x, event.mouseButton.y, boutonCoord[1][0], boutonCoord[1][1], DIMENSION, DIMENSION) && tileSelected<17)
                     {
+                        //choix de la tuile
                         tileSelected+=1;
                     }
                     else
                     {
+                        //on remplace la valeur de la tuile par celle choisi avant
                         changeMapValue(plan, 10, 10, event.mouseButton.x, event.mouseButton.y, tileSelected, 35, 20);
                     }
                 }
@@ -594,6 +603,7 @@ void editor(int *plan, sf::Sprite tileset, sf::RenderWindow *fenetre, char *mapN
 
 int findLetter(char lettre)
 {
+    //on convertit une lettre en numéro pour ensuite afficher l'image de la lettre correspondante
     int numLettre=29;
 
     switch(lettre)
@@ -721,6 +731,7 @@ int findLetter(char lettre)
 
 void MachineAEcrire(sf::Sprite fontTile, sf::RenderWindow *fenetre, char* texte, int posX, int posY, float taille)
 {
+    //equivalent du printf mais dans sfml avec notre police(fontTile)
     int i=0;
     int lettre=0;
     for(i=0; texte[i] != '\0'; i++)
@@ -738,6 +749,7 @@ void MachineAEcrire(sf::Sprite fontTile, sf::RenderWindow *fenetre, char* texte,
 
 void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, sf::Sprite spriteTexte, sf::Sprite spriteCurseur)
 {
+    //le jeu
     sf::Event event;
     sf::Vector2i mousePos;
 
@@ -768,14 +780,29 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
         printf("Erreur !");
     Boss skullBoss;
 
+    //Chargement des sons
+    sf::SoundBuffer bufferSlime, bufferFireball;
+    sf::Sound sonSlime, sonFireball;
+
+    if (!bufferSlime.loadFromFile("son/slime.wav"))
+        printf("Erreur de chargement du son de slime");
+    sonSlime.setBuffer(bufferSlime);
+    sonSlime.setVolume(100);
+
+    if (!bufferFireball.loadFromFile("son/fire.wav"))
+        printf("Erreur de chargement du son de fire");
+    sonFireball.setBuffer(bufferFireball);
+    sonFireball.setVolume(100);
+
     spriteBoss.setTexture(textureBoss);
     spriteBoss.setTextureRect(sf::IntRect(0,0,30,30));
     spriteBoss.setPosition(skullBoss.get_posx(),skullBoss.get_posy());
     spriteBoss.setScale(sf::Vector2f(2.0f,2.0f));
     //fin variables boss
-
+    //tableau des boules de feu
     Fireball fireball[20];
 
+    //tableau des ennemis
     ennemy vague[20];
     int max=20, slime_etat=0, nb_nonActif, k, retourMenu=0, nbMorts=0, nbVagues=1, nbEnnemiSupp=0;
     sf::Sprite spriteSlime, spriteMage, spriteFireball_mage;
@@ -798,10 +825,12 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
 
     for (i=0; i<3; i++)
     {
+        //création des premiers ennemis
         vague[i].setPosition(240+40*i, 80+40*i);
         vague[i].setActif(1);
         vague[i].setType(0);
         vague[i].setZone(0);
+        //Le dernier slime sera un ennemi à distance
         if (i==2)
         {
             vague[i].setType(1);
@@ -817,39 +846,40 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
     while(fenetre->isOpen() && retourMenu==0)
     {
 
-        //code Sylvain
-        //Temps
+        //Des monstres apparaissent au bout d'un certain temps
         if (clock.getElapsedTime()>temps)
         {
-            printf("time");
             clock.restart();
             aleat=rand()%4;
-            printf("%i", aleat);
+            //on déplace les slimes
             for (j=0; j<3; j++)
             {
                 for(i=0; i<max; i++)
                 {
                     if(vague[i].isActif()==0)
                     {
+                        //Selon la valeur de aleat, on fait apparaître les ennemis dans une partie de la map
                         if (aleat==0)
                         {
-                            vague[i].setPosition(0,240+((i)*40));
+                            vague[i].setPosition(0,200+((j)*20));
                         }
                         else if (aleat==1)
                         {
-                            vague[i].setPosition(500+((i)*40), 240);
+                            vague[i].setPosition(500+((j)*20), 240);
                         }
                         else if (aleat==2)
                         {
-                            vague[i].setPosition(240,500+((i)*40));
+                            vague[i].setPosition(240,500+((j)*20));
                         }
                         else if (aleat==3)
                         {
-                            vague[i].setPosition(240+((i)*40),10);
+                            vague[i].setPosition(240+((j)*20),10);
                         }
+                        //De base, ce sont tous des slimes de type 0
                         vague[i].setActif(1);
                         vague[i].setType(0);
                         vague[i].setZone(0);
+                        //20% de chance que l'ennemi soit un mage de type 1 et avec une zone de 100
                         if (int a = rand()%10<2)
                         {
                             vague[i].setType(1);
@@ -884,13 +914,14 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
         {
             slimeStep -= 1;
         }
-
+        //Au départ, aucun ennemi n'est mort
         nb_nonActif=0;
         //code Sylvain
         while(fenetre->pollEvent(event))
         {
             switch(event.type)
             {
+            //La touche 'P' ouvre le menu pause
             case sf::Event::KeyPressed:
                 if (event.key.code==sf::Keyboard::P)
                 {
@@ -901,25 +932,21 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
             case sf::Event::Closed:
                 fenetre->close();
                 break;
-            /*case sf::Event::MouseMoved:
-                mousePos = sf::Mouse::getPosition(*fenetre);
-                //printf("x : %i || y : %i\n", mousePos.x, mousePos.y);
-                //600,600
-                break;*/
             case sf::Event::MouseButtonPressed:
+                //Au clic, le ninja dash
                 ninja.setIsSlash(400);
                 break;
             default:
                 break;
             }
         }
+        //On récupère la position de la souris et on déplace le ninja vers la souris
         mousePos = sf::Mouse::getPosition(*fenetre);
-        deplacementSouris(&ninja, mousePos.x, mousePos.y, planMap, vague, &score, &nbMorts);
+        deplacementSouris(&ninja, mousePos.x, mousePos.y, planMap, vague, &score, &nbMorts, fireball, nbboule);
         setTexureRectNinja(&spriteTexture, ninja.getWalkStep(), ninja.getSlashStep());
         spriteTexture.setPosition(ninja.getX()-20,ninja.getY()-20);
-
-        //gestion boss
-        if (etat==0)
+        //gestion du boss, pas encore terminée
+        /*if (etat==0)
         {
             spriteBoss.setTextureRect(sf::IntRect(0,0,30,30));
         }
@@ -950,27 +977,26 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
         }
         skin++;
         //fin gestion boss
+        */
 
-        //code sylvain
         fenetre->clear();
+        //On dessine la map
         drawMapGame(planMap, 10, 10, spriteTexture,  fenetre, 0, 0);
-        //on met à jour le score
-        /*for(curseurScore=10; curseurScore<100; curseurScore++)
-        {
-            scoreTXT[k]=(char)((int)score/1000);
-        }*/
-        scoreTXT[7]=(char)(score/1000)+48;
-        scoreTXT[8]=(char)((score-(score/1000)*1000)/100)+48;
-        scoreTXT[9]=(char)((score-(score/100)*100)/10)+48;
-        scoreTXT[10]=(char)(score-(score/10)*10)+48;
 
-        vagueTXT[7]=(char)(nbVagues/1000)+48;
+        //on met à jour le score
+        scoreTXT[7]=(char)(score/1000)+48; //on récupère le chiffre des millier
+        scoreTXT[8]=(char)((score-(score/1000)*1000)/100)+48; //on récupère le chiffre des centaines
+        scoreTXT[9]=(char)((score-(score/100)*100)/10)+48; //on récupère le chiffre des dizaines
+        scoreTXT[10]=(char)(score-(score/10)*10)+48; //on récupère le chiffre des unitées
+
+        vagueTXT[7]=(char)(nbVagues/1000)+48; //pareil que juste avant mais pour le nombre de vague
         vagueTXT[8]=(char)((nbVagues-(nbVagues/1000)*1000)/100)+48;
         vagueTXT[9]=(char)((nbVagues-(nbVagues/100)*100)/10)+48;
         vagueTXT[10]=(char)(nbVagues-(nbVagues/10)*10)+48;
 
         if (nbMorts>=3+nbEnnemiSupp)
         {
+            //on instancie la vague suivante
             nbVagues++;
             nbMorts=0;
             nbEnnemiSupp=nbEnnemiSupp+3;
@@ -979,6 +1005,13 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
         MachineAEcrire(spriteTexte, fenetre, scoreTXT, 610, 100, 0.8);
         MachineAEcrire(spriteTexte, fenetre, vagueTXT, 610, 200, 0.8);
 
+        if (ninja.getLife()==0)
+        {
+            //quand le ninja est mort on affiche l'écran de défaite et on revient au menu après
+            retourMenu=1;
+            EcranDefaite(fenetre, scoreTXT, vagueTXT, spriteTexte);
+        }
+        //Gestion du boss
         /*if (nbVagues%5==0)
         {
             for (i=0; i<max; i++)
@@ -996,23 +1029,27 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
             fenetre->draw(spriteBoss);
         }*/
 
-        //Slimes 1 par 1
+        //On parcourt le tableau des slimes
         for (i=0; i<max; i++)
         {
-            pas_haut=1;
+            //De base, ils n'ont aucune collision
+            pas_haut=1; //à 1, cela siginifie qu'il peut aller vers le haut car il n'y a pas de collision
             pas_bas=1;
             pas_gauche=1;
             pas_droite=1;
+
+            //On ne parcourt que les ennemis actifs
             if(vague[i].isActif()==1)
             {
                 for (k=0; k<pas; k++)
-                    //Faire avancer de 10
+                //Faire avancer de 10
                 {
                     if(slimeStep == 0)
                     {
                         for (j=0; j<max; j++)
-                            //Collisions slime 1 par 1
+                        //Collisions entre slimes 1 par 1
                         {
+                            //Si collision entre deux slimes dans une direction, il ne peut pas y aller
                             if (collision_droite(vague[i].get_x(), vague[i].get_y(), vague[j].get_x(), vague[j].get_y(), 20, 20, 20,20)==true && i!=j)
                             {
                                 pas_droite=0;
@@ -1033,11 +1070,14 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
                     }
                     else
                     {
+                        //Si l'ennemi n'est pas actif, il ne bouge pas
                         pas_bas=0;
                         pas_droite=0;
                         pas_gauche=0;
                         pas_haut=0;
                     }
+                    //Ce code revient à dire que si l'ennemi est derrière le ninja, il avance
+                    //Et de même pour toutes les directions
                     if (ninja.getX()-vague[i].get_x()>0-vague[i].getZone() && pas_droite!=0)
                     {
                         vague[i].setPosition(vague[i].get_x()+1, vague[i].get_y());
@@ -1055,19 +1095,29 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
                         vague[i].setPosition(vague[i].get_x(), vague[i].get_y()-1);
                     }
                     if (vague[i].getType()==1)
+                    {
                         spriteMage.setPosition(vague[i].get_x(), vague[i].get_y());
+                    }
                     else
+                    {
                         spriteSlime.setPosition(vague[i].get_x(), vague[i].get_y());
+                        sonSlime.play();
+                    }
                 }
+                //Les mages ont une petite chance de lancer une boule de feu
                 float b = (float)rand()/(RAND_MAX);
                 if (nbboule<20 && b<0.01 && vague[i].getType()==1 && vague[i].isActif()==1)
                 {
+                    //On augmente le nombre de boules de feu
                     nbboule++;
+                    //Elle est créée au niveau du mhttp://www.kongregate.com/fr/games/nicotuason/dojo-of-deathage
                     fireball[nbboule].set_posx(vague[i].get_x());
                     fireball[nbboule].set_posy(vague[i].get_y());
+                    //Elle va en direction du ninja (position actuelle)
                     fireball[nbboule].set_directionx(fireball[nbboule].calculeDirectionx(ninja.getX(), ninja.getY()));
                     fireball[nbboule].set_directiony(fireball[nbboule].calculeDirectiony(ninja.getX(), ninja.getY()));
                     spriteFireball_mage.setPosition(fireball[nbboule].get_posx(), fireball[nbboule].get_posy());
+                    sonFireball.play();
                 }
             }
             if(vague[i].isActif()==1)
@@ -1082,9 +1132,11 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
         {
             for(i=0; i<nbboule; i++)
             {
+                //On déplace les boules de feu
                 fireball[i].set_posx(fireball[i].get_posx()+fireball[i].get_directionx()*5);
                 fireball[i].set_posy(fireball[i].get_posy()+fireball[i].get_directiony()*5);
                 spriteFireball_mage.setPosition(fireball[i].get_posx(), fireball[i].get_posy());
+                //Si la boule de feu sort de la zone, elle est détruite et on actualise le tableau
                 if ((fireball[i].get_posx()>600 || fireball[i].get_posy()>600) || (fireball[i].get_posx()<0 || fireball[i].get_posy()<0))
                 {
                     fireball[i].~Fireball();
@@ -1107,10 +1159,7 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
         {
             slimeStep=3;
         }*/
-        //code sylvain
 
-        //fenetre->clear();
-        //drawMapGame(planMap, 10, 10, spriteTexture,  fenetre, 0, 0);
         fenetre->draw(spriteTexture);
         fenetre->display();
     }
@@ -1120,6 +1169,7 @@ void InGame(sf::RenderWindow *fenetre, int *planMap, sf::Sprite spriteTexture, s
 
 void Jouer(sf::Sprite tileset, sf::Sprite tileTexte, sf::RenderWindow *fenetre, char *nomMap, int *carte)
 {
+    //On demande le nom de la map à l'utilisateur
     //exitVar passera a 1 quand le joueur aura choisi sa map
     int exitVar = 0;
     char informations[]="Entrez le nom de la map a charger";

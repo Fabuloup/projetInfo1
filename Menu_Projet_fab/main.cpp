@@ -30,13 +30,13 @@ int main()
     *vsync_choixOpt = (char*)malloc(256);
     srand(time(NULL));
 
-    //Activation vsync
+    //Activation vsync de base
     free(vsync_choixOpt);
     *vsync_choixOpt=strcpy(*vsync_choixOpt, "ON");
     fenetre.setVerticalSyncEnabled(true);
     vsyncOn=1;
 
-    //Chargement son
+    //Chargement sons et musiques
     sf::Music musiqueFond, musiqueJeu;
     if (!musiqueFond.openFromFile("ressources/Blackmoor_Ninjas.wav"))
         printf("Erreur de chargement de la musique du menu");
@@ -66,9 +66,7 @@ int main()
     //Chargement texture et sprite pour la fonction 'MachineAEcrire'
     sf::Texture textTexture;
     if( !textTexture.loadFromFile("ressources/alphabetred.png"))
-    {
         printf("Impossible de charger le tileset du texte");
-    }
     sf::Sprite spriteTexte;
     spriteTexte.setTexture(textTexture);
 
@@ -95,11 +93,10 @@ int main()
     spriteMenu.setScale(2.0f,2.0f);
 
     //Découpage des textures
-    //spriteMenu.setTextureRect(sf::IntRect(100,40,100,60));
     spriteChoix.setTextureRect(sf::IntRect(200,0,200,220));
     spriteCurseur.setTextureRect(sf::IntRect(0,170,60,20));
 
-    //Position
+    //Position des éléments de base
     spriteMenu.setPosition((LARGEUR_FENETRE/2)-250,40);
     spriteChoix.setPosition((LARGEUR_FENETRE/2)-40, HAUTEUR_FENETRE/2-110);
     spriteCurseur.setPosition((LARGEUR_FENETRE/2)-40-70,(HAUTEUR_FENETRE/2)-110+10);
@@ -122,6 +119,7 @@ int main()
         {
             switch (event.type)
             {
+            //Si clic sur la croix de la fenetre
             case sf::Event::Closed:
                 fenetre.close();
                 break;
@@ -199,6 +197,7 @@ int main()
                     //Fonction pour redessiner la fenêtre
                     DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
                 }
+
                 //En fonction de la position de 'touche' qui est la position en y du curseur, on définit le choix
                 switch (touche)
                 {
@@ -221,13 +220,15 @@ int main()
                 break;
             }
             }
+            //Test si un clic gauche est fait ou si on appuie sur 'Entrée' pour valider
             if ((event.type==sf::Event::KeyPressed && event.key.code==sf::Keyboard::Return) || (event.type==sf::Event::MouseButtonPressed && event.key.code==sf::Mouse::Left))
             {
                 sonChoix.play();
                 switch (choix)
                 {
                 case 1:
-                    printf("Jouer");
+                    //Option jouer pour le jeu principal
+                    //Fonction qui charge la map
                     Jouer(spriteChoix, spriteTexte, &fenetre, nomMap, carte);
                     musiqueFond.stop();
                     if (sonOn==1)
@@ -235,13 +236,20 @@ int main()
                         musiqueJeu.play();
                         musiqueJeu.setLoop(true);
                     }
+                    //Fonction du jeu principal
                     InGame(&fenetre, carte, spriteChoix, spriteTexte, spriteCurseur);
+                    //Si on sort du jeu, on redessine le menu et on met le curseur sur 'Jouer'
+                    DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
+                    choix=1;
+                    touche=(HAUTEUR_FENETRE/2)-110+10;
+                    musiqueJeu.stop();
+                    musiqueFond.play();
                     break;
                 case 2:
-                    printf("Multi");
+                    //Mode multi, pas encore codé
                     break;
                 case 3:
-                    printf("Options");
+                    //Les options du jeu
                     quitterOptions=0;
                     posOption=1;
                     //On dessine le menu d'Options et on met le curseur sur le premier choix
@@ -251,12 +259,14 @@ int main()
                     {
                         if (fenetre.pollEvent(event))
                         {
+                            //Test déplacement souris
                             if (event.type==sf::Event::MouseMoved)
                             {
                                 sonDeplacement.play();
                                 //Si souris est sur vsync
                                 if (event.mouseMove.x>=300 && event.mouseMove.x<=500 && event.mouseMove.y>=200 && event.mouseMove.y<=240)
                                 {
+                                    //On redessine le menu avec la nouvelle position du curseur
                                     OptionsMenu(&fenetre, spriteFond, spriteCurseur, 240, 210, spriteTexte, titreOpt, 200, 25, 3.0, vsyncOpt, 300, 200, 2.2, sonOpt, 350, 300, 2.0, quitterOpt, 275, 500, 2.0, *vsync_choixOpt, 600, 200, 2.2, *son_choixOpt, 600, 300, 2.0, scoresOpt, 300, 400, 2.0);
                                     posOption=1;
                                 }
@@ -297,6 +307,7 @@ int main()
                                 }
                                 switch (posOption)
                                 {
+                                //On redessine le menu selon posOption, soit le choix sélectionné
                                 case 1:
                                     OptionsMenu(&fenetre, spriteFond, spriteCurseur, 240, 210, spriteTexte, titreOpt, 200, 25, 3.0, vsyncOpt, 300, 200, 2.2, sonOpt, 350, 300, 2.0, quitterOpt, 275, 500, 2.0, *vsync_choixOpt, 600, 200, 2.2, *son_choixOpt, 600, 300, 2.0, scoresOpt, 300, 400, 2.0);
                                     break;
@@ -364,7 +375,7 @@ int main()
                                 }
                                  else if (posOption==3)
                                 {
-                                    printf("Scores");
+                                    //Afficher les scores, pas encore codé
                                 }
                             }
 
@@ -375,11 +386,12 @@ int main()
                     touche=(HAUTEUR_FENETRE/2)-110+10;
                     break;
                 case 4:
+                    //Fonction éditeur de map
                     funcEditor(spriteChoix, spriteTexte, &fenetre);
                     DessineMenu(&fenetre, spriteChoix, spriteFond, spriteMenu, spriteCurseur, sonDeplacement);
                     break;
                 case 5:
-                    printf("Quitter");
+                    //Fermer la fenêtre
                     fenetre.close();
                     musiqueFond.stop();
                     break;
