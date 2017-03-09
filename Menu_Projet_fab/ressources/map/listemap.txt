@@ -1,22 +1,4 @@
 
 salut .map
-salut .map
-salut .map
 renoi.map
 test.map
-renoi.map
-renoi.map
-renoi.map
-renoi.map
-renoi.map
-renoi.map
-renoi.map
-renoi.map
-renoi.map
-renoi.map
-renoi.map
-default.map
-default.map
-default.map
-default.map
-default.map
