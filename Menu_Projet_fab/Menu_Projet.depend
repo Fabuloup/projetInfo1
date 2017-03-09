@@ -153,12 +153,12 @@
 	"funcWaves.hpp"
 	"fireball.hpp"
 
-1488462273 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functioneditor.cpp
+1488992857 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functioneditor.cpp
 	"functionEditor.hpp"
 	"fireball.hpp"
 	"functionMenu.hpp"
 
-1488388534 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functioneditor.hpp
+1488992857 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functioneditor.hpp
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -166,38 +166,42 @@
 	<SFML/Graphics.hpp>
 	<fstream>
 	<iostream>
+	<SFML/Audio.hpp>
 	"functionPerso.hpp"
 	"funcWaves.hpp"
+	"boss.hpp"
 
-1488389455 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionperso.hpp
+1488992857 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionperso.hpp
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
 	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
 	"funcWaves.hpp"
+	"fireball.hpp"
 
 1488388534 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\funcwaves.hpp
 
-1488388534 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionmenu.cpp
+1488992857 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionmenu.cpp
 	<stdio.h>
 	<stdlib.h>
 	<SFML/Graphics.hpp>
 	"functionMenu.hpp"
 	"functionEditor.hpp"
 
-1488388534 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionmenu.hpp
+1488992857 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionmenu.hpp
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 	<stdio.h>
 	<stdlib.h>
 
-1488390262 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionperso.cpp
+1488992857 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\functionperso.cpp
 	"functionPerso.hpp"
 
-1488388534 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\funcwaves.cpp
+1488992856 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\funcwaves.cpp
 	"funcWaves.hpp"
 
-1488388534 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\main.cpp
+1488992857 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\main.cpp
 	<stdio.h>
 	<stdlib.h>
 	<SFML/Graphics.hpp>
@@ -271,7 +275,7 @@
 
 1488364549 p:\projetinfo1-master\jeu fonctionne\menu_projet_fab\fireball.hpp
 
-1488388534 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\fireball.cpp
+1488992856 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\fireball.cpp
 	"fireball.hpp"
 	<math.h>
 
@@ -368,6 +372,17 @@
 	<math.h>
 
 1488878082 p:\menu_projet_fab\boss.hpp
+	<SFML/Graphics.hpp>
+	"fireball.hpp"
+
+1488992856 source:c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\boss.cpp
+	"boss.hpp"
+	<stdlib.h>
+	"fireball.hpp"
+	<SFML/Graphics.hpp>
+	<math.h>
+
+1488909161 c:\users\steven\documents\iut\projetgithub\trunk\menu_projet_fab\boss.hpp
 	<SFML/Graphics.hpp>
 	"fireball.hpp"
 
