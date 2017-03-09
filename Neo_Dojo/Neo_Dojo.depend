@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1489070177 source:d:\users\sylvain\desktop\projet\neo_dojo\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	<time.h>
+	<string.h>
+	<conio.h>
+	<fstream>
+	<iostream>
+	<math.h>
+
