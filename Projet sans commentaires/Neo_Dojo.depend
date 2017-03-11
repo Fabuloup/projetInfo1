@@ -11,3 +11,15 @@
 	<iostream>
 	<math.h>
 
+1489233267 source:c:\users\steven\documents\iut\projetgithub\trunk\projet sans commentaires\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	<time.h>
+	<string.h>
+	<conio.h>
+	<fstream>
+	<iostream>
+	<math.h>
+
