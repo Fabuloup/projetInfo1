@@ -29,6 +29,7 @@
 					<Add option="-s" />
 					<Add library="C:/Program Files (x86)/CodeBlocks/sfml/lib/libsfml-graphics-s.a" />
 					<Add library="jpeg" />
+					<Add library="freetype" />
 					<Add library="sfml-audio-s" />
 					<Add library="sndfile" />
 					<Add library="openal32" />
