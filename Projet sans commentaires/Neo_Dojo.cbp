@@ -23,13 +23,22 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DSFML_STATIC" />
+					<Add directory="C:/Program Files (x86)/CodeBlocks/sfml/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="C:/Program Files (x86)/CodeBlocks/sfml/lib/libsfml-audio.a" />
-					<Add library="C:/Program Files (x86)/CodeBlocks/sfml/lib/libsfml-graphics.a" />
-					<Add library="C:/Program Files (x86)/CodeBlocks/sfml/lib/libsfml-system.a" />
-					<Add library="C:/Program Files (x86)/CodeBlocks/sfml/lib/libsfml-window.a" />
+					<Add library="C:/Program Files (x86)/CodeBlocks/sfml/lib/libsfml-graphics-s.a" />
+					<Add library="jpeg" />
+					<Add library="sfml-audio-s" />
+					<Add library="sndfile" />
+					<Add library="openal32" />
+					<Add library="C:/Program Files (x86)/CodeBlocks/sfml/lib/libsfml-window-s.a" />
+					<Add library="opengl32" />
+					<Add library="gdi32" />
+					<Add library="C:/Program Files (x86)/CodeBlocks/sfml/lib/libsfml-system-s.a" />
+					<Add library="winmm" />
+					<Add directory="C:/Program Files (x86)/CodeBlocks/sfml/lib" />
+					<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/lib" />
 				</Linker>
 			</Target>
 		</Build>
