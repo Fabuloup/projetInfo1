@@ -2,3 +2,5 @@
 salut .map
 renoi.map
 test.map
+default.map
+test.map
